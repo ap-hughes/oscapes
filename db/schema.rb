@@ -10,10 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305150303) do
+ActiveRecord::Schema.define(version: 20180305161909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "coordinates", force: :cascade do |t|
+    t.float "latitude"
+    t.float "longitude"
+    t.bigint "route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["route_id"], name: "index_coordinates_on_route_id"
+  end
+
+  create_table "favourites", force: :cascade do |t|
+    t.bigint "route_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["route_id"], name: "index_favourites_on_route_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
+    t.bigint "route_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["route_id"], name: "index_reviews_on_route_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "difficulty"
+    t.integer "duration"
+    t.integer "ascent"
+    t.integer "distance"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_routes_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,8 +70,19 @@ ActiveRecord::Schema.define(version: 20180305150303) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "photo"
+    t.string "ability"
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "coordinates", "routes"
+  add_foreign_key "favourites", "routes"
+  add_foreign_key "favourites", "users"
+  add_foreign_key "reviews", "routes"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "routes", "users"
 end
