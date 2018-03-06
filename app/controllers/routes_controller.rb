@@ -34,6 +34,11 @@ class RoutesController < ApplicationController
         # geo_context: 2,
         per_page: 10,
       }
+
+      FlickRaw.api_key = ENV['flickr_api_key']
+      FlickRaw.shared_secret = ENV['flickr_api_secret']
+
+
       list = flickr.photos.search(search_terms)
       image = FlickRaw.url_c(list[0])
       if image != image_gallery.last
