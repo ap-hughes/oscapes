@@ -16,6 +16,8 @@ class RoutesController < ApplicationController
       @difficulty = 1
     end
     @images = get_images(@route)
+    @coordinates = @route.coordinates.map { |coordinate| [coordinate.longitude, coordinate.latitude] }
+    @center = find_center(@route)
   end
 
   private
@@ -39,5 +41,10 @@ class RoutesController < ApplicationController
       end
     end
     return image_gallery
+  end
+
+  def find_center(route)
+    middle = route.coordinates.length / 2
+    [route.coordinates[middle].longitude, route.coordinates[middle].latitude]
   end
 end

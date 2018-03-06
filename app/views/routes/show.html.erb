@@ -47,5 +47,70 @@
   <div class="map">
     MAP INFROMATION - AND POI AND HOTELS INFO DISPLAYED ON A MAP
   </div>
+
+  <div id='map'></div>
+  <script>
+
+    var geojson = {
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "properties": {},
+            "coordinates": <%= @coordinates %>
+            }
+        }]
+    };
+
+    // Loading the map
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/outdoors-v10',
+      center: <%= @center %>,
+      zoom: 10
+    });
+
+    // Navigation controls
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // Loading the route on the map
+    map.on('load', function () {
+
+      map.addLayer({
+        "id": "route",
+        "type": "line",
+        "source": {
+            "type": "geojson",
+            "data": geojson
+        },
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": "#1a936f",
+            "line-width": 8
+        }
+      });
+
+      // Geographic coordinates of the LineString
+      var coordinates = geojson.features[0].geometry.coordinates;
+
+      // Pass the first coordinates in the LineString to `lngLatBounds` &
+      // wrap each coordinate pair in `extend` to include them in the bounds
+      // result. A variation of this technique could be applied to zooming
+      // to the bounds of multiple Points or Polygon geomteries - it just
+      // requires wrapping all the coordinates with the extend method.
+      var bounds = coordinates.reduce(function(bounds, coord) {
+          return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+      map.fitBounds(bounds, {
+          padding: 40
+      });
+    });
+  </script>
 </div>
 
