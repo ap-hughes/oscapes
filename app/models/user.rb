@@ -10,4 +10,5 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :ability, inclusion: { in: ["Beginner", "Intermediate", "Advanced"] }
+  mount_uploader :photo, PhotoUploader
 end

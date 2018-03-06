@@ -1,0 +1,29 @@
+.box-profile-header {
+  margin: 20px;
+}
+.box-profile-content {
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px #6FCF97;
+  border-radius: 5px;
+}
+
+.review-box {
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 0px #6FCF97;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.review-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  &:hover {
+    background-color: #6FCF97;
+    opacity: 0.3;
+  }
+}
+

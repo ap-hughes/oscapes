@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305161909) do
+ActiveRecord::Schema.define(version: 20180306151959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,9 +72,10 @@ ActiveRecord::Schema.define(version: 20180305161909) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "photo"
+    t.string "photo", default: "http://res.cloudinary.com/dpu1qidv2/image/upload/v1520266484/default-profile.png"
     t.string "ability"
     t.text "bio"
+    t.string "community_level", default: "Junior Oscaper"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
