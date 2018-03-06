@@ -1,0 +1,31 @@
+.route-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.route-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 0;
+  h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 8px 0 0;
+  }
+  p {
+    font-size: 18px;
+    font-weight: lighter;
+    margin: 0;
+  }
+  img {
+    width: 60px;
+  }
+}
+
+.route-info-desc {
+  p {
+    font-size: 20px;
+  }
+}
