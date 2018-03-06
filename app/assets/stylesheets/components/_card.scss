@@ -1,0 +1,34 @@
+.card {
+  height: 350px;
+  width: 350px;
+  margin: 10px;
+  background-size: cover !important;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    .card-hover {
+      opacity: 0.5;
+      background-color: #000;
+    }
+    // .overlay{
+      // opacity: 0.3;
+    // }
+  }
+}
+
+.card-hover {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// .overlay {
+//   width: 100%;
+//   height: 100%;
+//   opacity: 0;
+// }
