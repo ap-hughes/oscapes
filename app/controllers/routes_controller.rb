@@ -15,5 +15,14 @@ class RoutesController < ApplicationController
     else
       @difficulty = 1
     end
+    @coordinates = @route.coordinates.map { |coordinate| [coordinate.longitude, coordinate.latitude] }
+    @center = find_center(@route)
+  end
+
+  private
+
+  def find_center(route)
+    middle = route.coordinates.length / 2
+    [route.coordinates[middle].longitude, route.coordinates[middle].latitude]
   end
 end
