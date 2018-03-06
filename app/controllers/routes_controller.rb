@@ -15,11 +15,33 @@ class RoutesController < ApplicationController
     else
       @difficulty = 1
     end
+    @images = get_images(@route)
     @coordinates = @route.coordinates.map { |coordinate| [coordinate.longitude, coordinate.latitude] }
     @center = find_center(@route)
   end
 
   private
+
+  def get_images(route)
+    image_gallery = []
+    route.coordinates.each do |coordinate|
+      search_terms = {
+        lat: coordinate.latitude,
+        lon: coordinate.longitude,
+        radius: 0,
+        has_geo: true,
+        content_type: 1,
+        # geo_context: 2,
+        per_page: 10,
+      }
+      list = flickr.photos.search(search_terms)
+      image = FlickRaw.url_c(list[0])
+      if image != image_gallery.last
+        image_gallery << image
+      end
+    end
+    return image_gallery
+  end
 
   def find_center(route)
     middle = route.coordinates.length / 2
