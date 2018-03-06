@@ -1,0 +1,33 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="box-profile-header text-center">
+      <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
+      <h2><%= @user.first_name %> <%= @user.last_name %></h2>
+      <h4><%= @user.community_level %> | <%= @user.ability %></h4>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="box-profile-content">
+          <h3 class="text-center">About Me</h3>
+          <%= @user.bio %>
+        </div>
+      </div>
+       <div class="col-xs-12 col-sm-6">
+        <div class="box-profile-content">
+          <% faves = ["Cotswold Way", "Snowdonia", "Lake District", "Hadrians Wall"] %>
+          <h3 class="text-center">My Favourite Hikes</h3>
+            <ul>
+              <% faves.each do |fave| %>
+                <li><%= fave %></li>
+              <% end %>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
+  </div>
+</div>
+
+
