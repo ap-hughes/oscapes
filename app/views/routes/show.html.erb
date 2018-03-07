@@ -3,7 +3,12 @@
 <!-- <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1515523592004-96338c887fb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ef98762b97ad1e860eb9a3cc937492d6&auto=format&fit=crop&w=1050&q=80')"> -->
 <div class="hero-image" style="background-image: url('<%= @route.hero_image %>')">
   <h1><%= @route.name %></h1>
-
+  <%= link_to route_favourites_path(@route), method: :post do %>
+    <i class="fa fa-bookmark"></i>
+  <% end %>
+  <%= link_to route_favourites_path(@route), method: :post do %>
+    <i class="fa fa-share"></i>
+  <% end %>
 </div>
 
 <div class="container">

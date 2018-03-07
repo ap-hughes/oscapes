@@ -1,0 +1,17 @@
+// function refreshForm(innerHTML) {
+//   const newBioForm = document.getElementById('formTarget');
+//     newBioForm.innerHTML = innerHTML;
+// };
+function addBio() {
+  const bio = document.getElementById('bio-text');
+  const newBio = document.getElementById('user_bio').value
+  bio.innerText = newBio;
+  // bio.insertAdjacentHTML('afterend', bioHTML);
+  // const bioBox = document.querySelector('.box-profile-content p');
+  // bioBox.remove();
+};
+
+addBio();
+// addBio("<%= j render 'users/bio', user: @user %>");
+// refreshForm("<%= j render 'users/form', user: @user  %>");
+// console.log("hello user updated")

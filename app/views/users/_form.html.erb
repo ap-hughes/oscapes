@@ -1,0 +1,6 @@
+<%= simple_form_for user, remote: true do |f| %>
+  <div id="formTarget" class="hidden">
+    <%= f.input :bio %>
+    <%= f.button :submit %>
+  </div>
+<% end %>
