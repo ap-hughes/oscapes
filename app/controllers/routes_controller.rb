@@ -8,7 +8,7 @@ class RoutesController < ApplicationController
     @route = Route.find(params[:id])
     authorize @route
     @difficulty = get_difficulty_level
-    @coordinates = @route.coordinates.map { |coordinate| [coordinate.longitude, coordinate.latitude] }
+    @coordinates = @route.coordinates.order(id: :desc).map { |coordinate| [coordinate.longitude, coordinate.latitude] }
     @center = find_center(@route)
     if !@route.image_gallery_1
       get_images(@route)
