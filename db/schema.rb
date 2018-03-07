@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306151959) do
+ActiveRecord::Schema.define(version: 20180307111911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,9 @@ ActiveRecord::Schema.define(version: 20180306151959) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hero_image", default: "https://images.unsplash.com/photo-1467294388771-b3e867a4d321?ixlib=rb-0.3.5&s=914592383364aed60abbfaf7b74d9ad4&auto=format&fit=crop&w=1050&q=80"
+    t.string "image_gallery_1"
+    t.string "image_gallery_2"
     t.index ["user_id"], name: "index_routes_on_user_id"
   end
 
