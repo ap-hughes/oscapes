@@ -1,11 +1,12 @@
 class RoutesController < ApplicationController
   skip_before_action :authenticate_user!
   def index
-
+    @routes = policy_scope(Route).order(created_at: :desc)
   end
 
   def show
     @route = Route.find(params[:id])
+    authorize @route
     @difficulty = get_difficulty_level
     @coordinates = @route.coordinates.map { |coordinate| [coordinate.longitude, coordinate.latitude] }
     @center = find_center(@route)
