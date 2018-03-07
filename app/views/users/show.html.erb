@@ -9,7 +9,8 @@
       <div class="col-xs-12 col-sm-6">
         <div class="box-profile-content">
           <h3 class="text-center">About Me</h3>
-          <%= @user.bio %>
+          <p id="bio-text"><%= @user.bio %></p>
+          <%= render 'users/form', user: @user  %>
         </div>
       </div>
        <div class="col-xs-12 col-sm-6">
@@ -43,4 +44,22 @@
   </div>
 </div>
 
+<script>
+  const bioText = document.getElementById("bio-text");
+  const inputField = document.getElementById("formTarget")
+
+  bioText.addEventListener("click", (event) => {
+    console.log(event);
+    event.currentTarget.classList.toggle('hidden');
+    inputField.classList.toggle('hidden');
+  });
+
+  const form = document.querySelector(".simple_form.edit_user");
+
+  form.addEventListener("submit", () => {
+    bioText.classList.toggle("hidden");
+    inputField.classList.toggle("hidden");
+    console.log("just submitted");
+  })
+</script>
 
