@@ -47,11 +47,13 @@
           <h3><%= @user.first_name %>'s Reviews</h3>
           <% reviews = @user.reviews.reverse %>
           <% reviews.each do |review| %>
+          <%= link_to route_path(review.route) do %>
             <div class="review-box">
-              <h4>review.route.name | review.rating</h4>
+              <h4> <%= review.route.name %> | <%= review.rating %></h4>
                 <%= review.content %>
-                <a href="#" class="review-link"></a>
+
             </div>
+            <% end %>
           <% end %>
         </div>
       </div>
