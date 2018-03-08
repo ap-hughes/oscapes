@@ -18,6 +18,7 @@ class RoutesController < ApplicationController
     @images = [@route.hero_image, @route.image_gallery_1, @route.image_gallery_2]
   end
 
+
   private
 
   def get_difficulty_level
@@ -34,8 +35,14 @@ class RoutesController < ApplicationController
 
   def get_images(coordinates)
     image_gallery = []
-    middle_coordinate = coordinates.length / 2
-    image_coordinates = [coordinates.first, coordinates[middle_coordinate], coordinates.last]
+    if @route.coordinates.start_with?("[[[")
+      array_number = coordinates.length / 2
+      middle_coordinate = coordinates[array_number].length / 2
+      image_coordinates = [coordinates.first.first, coordinates[array_number][middle_coordinate], coordinates.last.last]
+    else
+      middle_coordinate = coordinates.length / 2
+      image_coordinates = [coordinates.first, coordinates[middle_coordinate], coordinates.last]
+    end
 
     image_coordinates.each do |coordinate|
       search_terms = {
@@ -63,21 +70,35 @@ class RoutesController < ApplicationController
   end
 
   def find_center(route)
-    middle = route.length / 2
-    [route[middle][0], route[middle][1]]
+    if @route.coordinates.start_with?("[[[")
+      array_number = route.length / 2
+      middle = route[array_number].length / 2
+      [route[array_number][middle][0], route[array_number][middle][1]]
+    else
+      middle = route.length / 2
+      [route[middle][0], route[middle][1]]
+    end
   end
 
   def coordinates_from(string)
-    array = string.tr("[]", "").split(",")
-    floats = array.map(&:to_f)
-    coordinates = []
-    i = floats.length
-    x = 0
-    while x < i
-      coordinates << floats[x..x+1]
-      x +=2
-    end
-    coordinates
+    # if string.start_with?("/\[\[\[/")
+      coordinates = JSON.parse(string)
+      coordinates.each do |coordinate|
+        coordinate.map { |f| '%.12f' % f }
+      end
+      coordinates
+    # else
+    #   array = string.tr("[]", "").split(",")
+    #   floats = array.map(&:to_f)
+    #   coordinates = []
+    #   i = floats.length
+    #   x = 0
+    #   while x < i
+    #     coordinates << floats[x..x+1]
+    #     x +=2
+    #   end
+    #   coordinates
+    # end
   end
 
 end
