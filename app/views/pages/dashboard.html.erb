@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Hi <%= @user.first_name %></h1>
+
+  <h2>Your saved hikes</h2>
+
+  <% if @user.favourites == [] %>
+    <p>You have no saved hikes</p>
+  <% else %>
+    <% @user.favourites.each do |favourite| %>
+      <div class="favourite-block">
+        <% route = Route.find(favourite.route_id) %>
+        <%= image_tag "#{route.hero_image}" %>
+        <div class="route-details">
+          <h3><%= route.name %></h3>
+          <p><%= route.description %></p>
+        </div>
+        <div class="route-end-block">
+          <div class="rating">
+            <p>Rating</p>
+            <% 4.times do %>
+              <i class="glyphicon glyphicon-star"></i>
+            <% end %>
+          </div>
+          <%= link_to route_path(route) do %>
+            <div class="btn btn-primary">
+              View Hike
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

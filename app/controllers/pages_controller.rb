@@ -4,4 +4,8 @@ class PagesController < ApplicationController
   def home
     @routes = Route.take(3)
   end
+
+  def dashboard
+    @user = current_user
+  end
 end
