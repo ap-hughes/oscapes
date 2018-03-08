@@ -10,7 +10,8 @@ class FavouritesController < ApplicationController
       @favourite.user = current_user
       @favourite.route = @route
       if @favourite.save
-        flash[:notice] = "This post has been bookmarked! Go to your dashboard to see all of your bookmarked routes"
+        link =
+        flash[:notice] = "This post has been bookmarked! Go to your#{view_context.link_to("dashboard", dashboard_path)} to see all of your bookmarked routes".html_safe
         redirect_to request.referrer
       else
         flash[:alert] = "You need to be logged in to your account to bookmark a route."
