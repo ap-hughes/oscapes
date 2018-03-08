@@ -63,3 +63,10 @@
   <div class="map">
     MAP INFROMATION - AND POI AND HOTELS INFO DISPLAYED ON A MAP
   </div>
+
+  <% if @route.coordinates.start_with?("[[[") %>
+    <%= render 'multilinestring' %>
+  <% else %>
+    <%= render 'linestring' %>
+  <% end %>
+</div>
