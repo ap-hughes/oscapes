@@ -5,13 +5,13 @@
     </form>
     <h1 class="text-center">(search result query name goes here)</h1>
     <div class="row">
-      <% 9.times do %>
-        <div class="col-xs-12 col-sm-4 col-md-4">
-          <%= link_to "#" do %>
-            <div class="card" style="background-image: url('https://images.unsplash.com/photo-1465188035480-cf3a60801ea5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1bc6eba58d956061ad309ba54c57c17e&auto=format&fit=crop&w=2600&q=80')">
+      <% @routes.each do |route| %>
+        <%= link_to route_path(route) do %>
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="card" style="background-image: url('<%= route.hero_image %>')">
               <div class="card-hover">
                 <div class="card-content">
-                  <h2>Yosemite</h2>
+                  <h2><%= route.name %></h2>
                   <p>50km | 3 Days</p>
                   <p>Easy | 1km Ascent</p>
                   <p>
@@ -22,8 +22,8 @@
                 </div>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
