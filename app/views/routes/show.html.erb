@@ -45,18 +45,21 @@
   </div>
 </div>
 
+<h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
+<%= render 'reviews/form',route: @route, review: @review %>
+<div id="reviews">
+  <% if @route.reviews.blank?  %>
+    <p>Be the pioneering reviewer for <%= @route.name %>!</p>
+  <% else %>
+    <% reviews = @route.reviews.reverse %>
+    <% reviews.each do |review| %>
+      <%= render 'reviews/show', review: review  %>
+    <% end %>
+  <% end %>
+</div>
 
 <!--   Need to update links to save and share routes -->
 
   <div class="map">
     MAP INFROMATION - AND POI AND HOTELS INFO DISPLAYED ON A MAP
   </div>
-
-  <% if @route.coordinates.start_with?("[[[") %>
-    <%= render 'multilinestring' %>
-  <% else %>
-    <%= render 'linestring' %>
-  <% end %>
-
-</div>
-

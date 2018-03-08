@@ -1,0 +1,14 @@
+<div id="review-description-box">
+  <h4>Review by
+    <%= link_to user_path(review.user_id) do %>
+    <%= review.user.first_name  %>
+    <% end %> |
+    <% review.rating.times do %>
+      <i class="fas fa-star"></i>
+      <% end %>
+      <% (5-review.rating).times do %>
+      <i class="far fa-star"></i>
+      <% end %>
+    </h4>
+    <p><%= review.content %></p>
+</div>

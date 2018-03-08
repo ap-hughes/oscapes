@@ -1,0 +1,32 @@
+function addReview(reviewHTML) {
+  const reviews = document.getElementById('reviews');
+  reviews.insertAdjacentHTML('afterbegin', reviewHTML);
+};
+
+function updateReviewsCount() {
+  let count = parseInt(document.getElementById('review-count').innerText, 10)
+  let word = ''
+  if (count === 0) {
+    word += 'Review'
+  } else {
+    word += 'Reviews'
+  }
+  count++
+  const string = `${count} ${word}`
+  document.getElementById('review-count').innerText = string
+};
+
+function refreshForm(newForm) {
+  const newReviewForm = document.getElementById('new_review');
+  newReviewForm.innerHTML = newForm;
+};
+
+<% if @review.errors.any? %>
+  refreshForm('<%= j render "reviews/form", route: @route, review: Review.new %>')
+<% else%>
+  addReview('<%= j render "reviews/show", review: @review  %>');
+  refreshForm('<%= j render "reviews/form", route: @route, review: Review.new %>')
+  updateReviewsCount();
+<% end%>
+
+

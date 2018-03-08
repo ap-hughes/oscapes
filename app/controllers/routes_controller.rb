@@ -7,6 +7,7 @@ class RoutesController < ApplicationController
   def show
     @route = Route.find(params[:id])
     authorize @route
+    @review = Review.new
     @difficulty = get_difficulty_level
     # @coordinates = @route.coordinates.order(id: :desc).map { |coordinate| [coordinate.longitude, coordinate.latitude] }
     @coordinates = coordinates_from(@route.coordinates)
