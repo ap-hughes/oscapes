@@ -1,6 +1,8 @@
 class RoutesController < ApplicationController
   skip_before_action :authenticate_user!
   def index
+    binding.pry
+    @routes = Route.all
     @routes = policy_scope(Route).order(created_at: :desc)
   end
 
