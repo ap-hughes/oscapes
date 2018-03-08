@@ -17,6 +17,7 @@ class RoutesController < ApplicationController
     @images = [@route.hero_image, @route.image_gallery_1, @route.image_gallery_2]
   end
 
+
   private
 
   def get_difficulty_level
