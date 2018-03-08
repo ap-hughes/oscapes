@@ -2,8 +2,24 @@
   <div class="container">
     <div class="box-profile-header text-center">
       <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
+      <% if @user == current_user %>
+        <div class="photo-form">
+          <%= simple_form_for(@user) do |f| %>
+            <%= f.input :photo, label: false, class: "form-control" %>
+            <%= f.button :submit, "Update Photo", class: "btn btn-success"  %>
+          <% end %>
+        </div>
+      <% end %>
       <h2><%= @user.first_name %> <%= @user.last_name %></h2>
       <h4><%= @user.community_level %> | <%= @user.ability %></h4>
+        <% if @user == current_user %>
+
+            <%= simple_form_for(@user) do |f| %>
+              <%= f.input :ability, label: false, class: "form-control" %>
+              <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
+            <% end %>
+
+        <% end %>
     </div>
     <div class="row">
       <div class="col-xs-12 col-sm-6">
@@ -49,24 +65,24 @@
 
 <script>
 
+  <% if @user == current_user %>
+    const bioText = document.getElementById("bio-text");
+    const inputField = document.getElementById("formTarget")
 
-  const bioText = document.getElementById("bio-text");
-  const inputField = document.getElementById("formTarget")
+    bioText.addEventListener("click", (event) => {
+      console.log(event);
+      event.currentTarget.classList.toggle('hidden');
+      inputField.classList.toggle('hidden');
+    });
 
-  bioText.addEventListener("click", (event) => {
-    console.log(event);
-    event.currentTarget.classList.toggle('hidden');
-    inputField.classList.toggle('hidden');
-  });
+    const form = document.getElementById("bio-form");
 
-  const form = document.querySelector(".simple_form.edit_user");
-
-  form.addEventListener("submit", () => {
-    bioText.classList.toggle("hidden");
-    inputField.classList.toggle("hidden");
-    console.log("just submitted");
-  })
-
+    form.addEventListener("submit", () => {
+      bioText.classList.toggle("hidden");
+      inputField.classList.toggle("hidden");
+      console.log("just submitted");
+    })
+  <% end %>
 
 </script>
 
