@@ -54,13 +54,14 @@
 
   <div id='map'></div>
 
+  <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
+  <%= render 'reviews/form',route: @route, review: @review %>
   <div id="reviews">
-    <h3><%= pluralize @route.reviews.size, "Review" %> (put average rating here)</h3>
-    <%= render 'reviews/form',route: @route, review: @review %>
     <% if @route.reviews.blank?  %>
       <p>Be the pioneering reviewer for <%= @route.name %>!</p>
     <% else %>
-      <% @route.reviews.each do |review| %>
+      <% reviews = @route.reviews.reverse %>
+      <% reviews.each do |review| %>
         <%= render 'reviews/show', review: review  %>
       <% end %>
     <% end %>
