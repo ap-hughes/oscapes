@@ -3,7 +3,18 @@ class RoutesController < ApplicationController
 
   skip_before_action :authenticate_user!
   def index
-    @routes = policy_scope(Route).order(created_at: :desc)
+    if params[:query].present?
+      # sql_query = "
+      # routes.name @@ :query \
+      # OR routes.description @@ :query \
+      # "
+      @query = params[:query]
+      search = Route.search_by_route_attributes("%#{params[:query]}%")
+      @routes = policy_scope(search).order(created_at: :desc)
+      # .where(sql_query, query: "%#{params[:query]}%")
+    else
+      @routes = policy_scope(Route).order(created_at: :desc)
+    end
   end
 
   def show
