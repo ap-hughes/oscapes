@@ -4,4 +4,17 @@ class RoutePolicy < ApplicationPolicy
       scope.all
     end
   end
+
+  def edit?
+    update?
+  end
+
+  def update?
+    # record.user_id == user
+    true
+  end
+
+  def get_image?
+    update?
+  end
 end
