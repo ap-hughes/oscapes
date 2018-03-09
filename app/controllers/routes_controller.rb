@@ -1,4 +1,6 @@
 class RoutesController < ApplicationController
+  require 'nokogiri'
+
   skip_before_action :authenticate_user!
   def index
     @routes = policy_scope(Route).order(created_at: :desc)
@@ -27,14 +29,23 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
     authorize @route
-    doc = Nokogiri::XML(open('test.gpx'))
+    file_data = params[:route][:coordinates]
+    file_data = File.read(params[:route][:upload].tempfile)
+    # if file_data.respond_to?(:read)
+    #   xml_contents = file_data.read
+    # elsif file_data.respond_to?(:path)
+    #   xml_contents = File.read(file_data.path)
+    # else
+    #   logger.error "Bad file_data: #{file_data.class.name}: #{file_data.inspect}"
+    # end
+    doc = Nokogiri::XML(file_data)
     trackpoints = doc.xpath('//xmlns:trkpt')
     points = Array.new
     trackpoints.each do |trkpt|
       points << [trkpt.xpath('@lon').to_s.to_f, trkpt.xpath('@lat').to_s.to_f].to_s
     end
     join_array = points.join(",")
-    string = join_array.prepend("[") + "]"
+    @route.coordinates = join_array.prepend("[") + "]"
     if @route.save
       redirect_to route_path(@route)
     else
