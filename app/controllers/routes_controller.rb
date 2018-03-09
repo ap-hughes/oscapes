@@ -1,8 +1,21 @@
 class RoutesController < ApplicationController
+  require 'nokogiri'
+
   skip_before_action :authenticate_user!
   before_action :find_route, only: [:show, :edit, :update]
   def index
-    @routes = policy_scope(Route).order(created_at: :desc)
+    if params[:query].present?
+      # sql_query = "
+      # routes.name @@ :query \
+      # OR routes.description @@ :query \
+      # "
+      @query = params[:query]
+      search = Route.search_by_route_attributes("%#{params[:query]}%")
+      @routes = policy_scope(search).order(created_at: :desc)
+      # .where(sql_query, query: "%#{params[:query]}%")
+    else
+      @routes = policy_scope(Route).order(created_at: :desc)
+    end
   end
 
   def show
@@ -54,6 +67,39 @@ class RoutesController < ApplicationController
     @image = FlickRaw.url_c(list[number])
   end
 
+  def new
+    @route = Route.new
+    authorize @route
+  end
+
+  def create
+    @route = Route.new(route_params)
+    @route.user = current_user
+    authorize @route
+    file_data = params[:route][:coordinates]
+    file_data = File.read(params[:route][:upload].tempfile)
+    # if file_data.respond_to?(:read)
+    #   xml_contents = file_data.read
+    # elsif file_data.respond_to?(:path)
+    #   xml_contents = File.read(file_data.path)
+    # else
+    #   logger.error "Bad file_data: #{file_data.class.name}: #{file_data.inspect}"
+    # end
+    doc = Nokogiri::XML(file_data)
+    trackpoints = doc.xpath('//xmlns:trkpt')
+    points = Array.new
+    trackpoints.each do |trkpt|
+      points << [trkpt.xpath('@lon').to_s.to_f, trkpt.xpath('@lat').to_s.to_f].to_s
+    end
+    join_array = points.join(",")
+    @route.coordinates = join_array.prepend("[") + "]"
+    if @route.save
+      redirect_to route_path(@route)
+    else
+      render :new
+    end
+  end
+
   private
 
   def find_route
@@ -61,7 +107,7 @@ class RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:name, :hero_image, :image_gallery_1, :image_gallery_2)
+    params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2)
   end
 
   def get_difficulty_level

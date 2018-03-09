@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update]
   get 'routes/:id/get_image', to: 'routes#get_image', as: :image
 
-  resources :routes, only: [:index, :show, :edit, :update] do
+  resources :routes, only: [:index, :show, :edit, :update, :new, :create] do
     resources :reviews, only: [:create]
     resources :favourites, only: [:create, :destroy]
   end

@@ -17,4 +17,8 @@ class RoutePolicy < ApplicationPolicy
   def get_image?
     update?
   end
+
+  def create?
+    true
+  end
 end
