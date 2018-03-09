@@ -38,12 +38,22 @@
 <div class="image-gallery">
   <div class="row">
     <% @images.each do |image| %>
-      <div class="col-xs-12 col-sm-4">
-        <%= image_tag image %>
+      <div class="col-xs-12 col-md-4">
+        <div class="image-card" style="background-image: url('<%= image %>')">
+
+        </div>
       </div>
     <% end %>
   </div>
 </div>
+
+
+  <%= link_to edit_route_path do %>
+    <div class="btn">
+      Edit this route.
+    </div>
+  <% end %>
+
 
 <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
   <% if @route.reviews.blank?  %>

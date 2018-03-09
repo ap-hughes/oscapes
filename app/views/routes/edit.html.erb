@@ -1,0 +1,32 @@
+<div id="route-form">
+  <%= simple_form_for @route, remote: true do |f| %>
+    <div id="formTarget">
+      <%= f.input :name %>
+      <%= f.input :description %>
+      <%= f.input :hero_image, id: "hero_image_form" %>
+      <%= link_to image_path(@route) do %>
+        <div class="btn btn-primary" id="hero_image">
+          Generate another image
+        </div>
+      <% end %>
+      <%= f.input :image_gallery_1 %>
+<!--       <%= image_tag @route.image_gallery_1 %> -->
+      <%= f.input :image_gallery_2 %>
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+</div>
+
+
+
+<!-- <script>
+  const hero_image = document.getElementById("hero_image");
+  const hero_image_form = document.getElementById("hero_image_form");
+
+  hero_image.addEventListener("click", (event) => {
+    event.preventDefault();
+    console.log("<%= get_image(@image_coordinates) %>");
+  });
+</script> -->
+
+
