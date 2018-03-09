@@ -1,0 +1,22 @@
+.route-reviews-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#review-description-box {
+  border-bottom: 1px solid #24916E;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#reviews {
+  margin-bottom: 40px;
+  width: 60%;
+}
+
+.review-form {
+  width: 60%;
+}

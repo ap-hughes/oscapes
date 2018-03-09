@@ -1,5 +1,7 @@
-<%= simple_form_for([route, review], remote: true) do |f| %>
-  <%= f.input :content, label: false, placeholder: "Your thoughts here :)" %>
-  <%= f.input :rating, collection: 1..5 %>
-  <%= f.button :submit, "Review!" %>
-<% end %>
+<div class="review-form">
+  <%= simple_form_for([route, review], remote: true) do |f| %>
+    <%= f.input :content, label: false, placeholder: "Your thoughts here :)" %>
+    <%= f.input :rating, collection: 1..5 %>
+    <%= f.button :submit, "Review!", class: "btn btn-success" %>
+  <% end %>
+</div>
