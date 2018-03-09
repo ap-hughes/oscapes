@@ -18,8 +18,35 @@ class RoutesController < ApplicationController
     @images = [@route.hero_image, @route.image_gallery_1, @route.image_gallery_2]
   end
 
+  def new
+    @route = Route.new
+    authorize @route
+  end
+
+  def create
+    @route = Route.new(route_params)
+    @route.user = current_user
+    authorize @route
+    doc = Nokogiri::XML(open('test.gpx'))
+    trackpoints = doc.xpath('//xmlns:trkpt')
+    points = Array.new
+    trackpoints.each do |trkpt|
+      points << [trkpt.xpath('@lon').to_s.to_f, trkpt.xpath('@lat').to_s.to_f].to_s
+    end
+    join_array = points.join(",")
+    string = join_array.prepend("[") + "]"
+    if @route.save
+      redirect_to route_path(@route)
+    else
+      render :new
+    end
+  end
 
   private
+
+  def route_params
+    params.require(:route).permit(:user_id, :name, :description, :coordinates)
+  end
 
   def get_difficulty_level
     if @route.difficulty == "Hard"

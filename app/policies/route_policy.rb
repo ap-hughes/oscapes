@@ -4,4 +4,8 @@ class RoutePolicy < ApplicationPolicy
       scope.all
     end
   end
+
+  def create?
+    true
+  end
 end
