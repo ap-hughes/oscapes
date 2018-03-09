@@ -14,7 +14,7 @@ class RoutesController < ApplicationController
     @image_coordinates = get_image_coordinates(@coordinates)
     @center = find_center(@coordinates)
     if !@route.image_gallery_1
-      get_images(@coordinates)
+      get_images(@image_coordinates)
     end
     @images = [@route.hero_image, @route.image_gallery_1, @route.image_gallery_2]
   end
