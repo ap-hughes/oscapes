@@ -4,17 +4,23 @@ function addReview(reviewHTML) {
 };
 
 function updateReviewsCount() {
-  let count = parseInt(document.getElementById('review-count').innerText, 10)
-  let word = ''
+  let count = parseInt(document.getElementById('review-count').innerText, 10);
+  let word = '';
   if (count === 0) {
-    word += 'Review'
+    word += 'Review';
+    removeReviewCallToAction();
   } else {
-    word += 'Reviews'
+    word += 'Reviews';
   }
-  count++
-  const string = `${count} ${word}`
-  document.getElementById('review-count').innerText = string
+  count++;
+  const string = `${count} ${word}`;
+  document.getElementById('review-count').innerText = string;
 };
+
+function removeReviewCallToAction() {
+  const callToAction = document.getElementById('review-cta');
+  callToAction.innerText = "";
+}
 
 function refreshForm(newForm) {
   const newReviewForm = document.getElementById('new_review');
