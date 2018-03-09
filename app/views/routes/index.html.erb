@@ -1,9 +1,19 @@
 <div class="wrapper">
   <div class="container">
-    <form action="#">
-      <input type="text" class="form-control" placeholder="Search by location, difficulty, ascent...">
-    </form>
-    <h1 class="text-center">(search result query name goes here)</h1>
+    <div id="search-field">
+      <%= form_tag routes_path, method: :get do %>
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "Find a hike by name or description, difficulty, duration, ascent, distance..."
+        %>
+      <% end %>
+    </div>
+    <% if @query.nil? %>
+      <h1 id="query-header" class="text-center"></h1>
+    <% else %>
+      <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
+    <% end %>
     <div class="row">
       <% @routes.each do |route| %>
         <%= link_to route_path(route) do %>
