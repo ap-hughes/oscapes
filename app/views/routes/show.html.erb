@@ -38,13 +38,21 @@
 <div class="image-gallery">
   <div class="row">
     <% @images.each do |image| %>
-      <div class="col-xs-12 col-sm-4">
-        <%= image_tag image %>
+      <div class="col-xs-12 col-md-4">
+        <div class="image-card" style="background-image: url('<%= image %>')">
+
+        </div>
       </div>
     <% end %>
   </div>
 </div>
 
+  <%= link_to edit_route_path do %>
+    <div class="btn">
+      Edit this route.
+    </div>
+  <% end %>
+  
 <hr>
 
 <!--   Need to update links to save and share routes -->
@@ -55,16 +63,16 @@
   <% end %>
 
   <div class="route-reviews-container">
-  <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
-    <% if @route.reviews.blank?  %>
-      <p id="review-cta">Be the pioneering reviewer for <%= @route.name %>!</p>
-    <% end %>
-  <%= render 'reviews/form',route: @route, review: @review %>
-  <div id="reviews">
-      <% reviews = @route.reviews.reverse %>
-      <% reviews.each do |review| %>
-        <%= render 'reviews/show', review: review  %>
+    <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
+      <% if @route.reviews.blank?  %>
+        <p id="review-cta">Be the pioneering reviewer for <%= @route.name %>!</p>
       <% end %>
+    <%= render 'reviews/form',route: @route, review: @review %>
+    <div id="reviews">
+        <% reviews = @route.reviews.reverse %>
+        <% reviews.each do |review| %>
+          <%= render 'reviews/show', review: review  %>
+        <% end %>
+    </div>
   </div>
-</div>
 </div>
