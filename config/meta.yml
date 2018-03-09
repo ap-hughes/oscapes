@@ -1,0 +1,5 @@
+meta_product_name: "Oscapes"
+meta_title: "Oscapes - Find and Plan Your Dream Hike"
+meta_description: "Whether you fancy escaping for a weekend walk, holiday hike, or even an epic trek, Oscapes is here to make planning and booking your trip a walk in the park."
+meta_image: "oscapes_logo.png"                       # should exist in `app/assets/images/`
+# twitter_account: "@product_twitter_account"   # required for Twitter Cards
