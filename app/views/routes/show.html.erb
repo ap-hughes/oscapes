@@ -47,35 +47,32 @@
   </div>
 </div>
 
-
   <%= link_to edit_route_path do %>
     <div class="btn">
       Edit this route.
     </div>
   <% end %>
-
-
-<h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
-  <% if @route.reviews.blank?  %>
-    <p id="review-cta">Be the pioneering reviewer for <%= @route.name %>!</p>
-  <% end %>
-<%= render 'reviews/form',route: @route, review: @review %>
-<div id="reviews">
-    <% reviews = @route.reviews.reverse %>
-    <% reviews.each do |review| %>
-      <%= render 'reviews/show', review: review  %>
-    <% end %>
-</div>
+  
+<hr>
 
 <!--   Need to update links to save and share routes -->
-
-  <div class="map">
-    MAP INFROMATION - AND POI AND HOTELS INFO DISPLAYED ON A MAP
-  </div>
-
   <% if @route.coordinates.start_with?("[[[") %>
     <%= render 'multilinestring' %>
   <% else %>
     <%= render 'linestring' %>
   <% end %>
+
+  <div class="route-reviews-container">
+    <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>
+      <% if @route.reviews.blank?  %>
+        <p id="review-cta">Be the pioneering reviewer for <%= @route.name %>!</p>
+      <% end %>
+    <%= render 'reviews/form',route: @route, review: @review %>
+    <div id="reviews">
+        <% reviews = @route.reviews.reverse %>
+        <% reviews.each do |review| %>
+          <%= render 'reviews/show', review: review  %>
+        <% end %>
+    </div>
+  </div>
 </div>
