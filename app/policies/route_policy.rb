@@ -25,4 +25,8 @@ class RoutePolicy < ApplicationPolicy
   def download_gpx?
     true
   end
+
+  def set_ascent_and_distance?
+    true
+  end
 end

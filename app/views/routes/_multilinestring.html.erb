@@ -14,6 +14,44 @@
         }]
     };
 
+     var poiGeojson = {
+      "type": 'FeatureCollection',
+      "features": []
+    };
+
+    const createGeoJsonFeature = (longitude, latitude, title, description) => {
+      return {
+        "type": 'Feature',
+        "geometry": {
+          "type": 'Point',
+          "coordinates": [longitude, latitude]
+        },
+        "properties": {
+          "title": title,
+          "description": description
+        }
+      }
+    };
+
+    const addToPoiGeoJson = (geoJsonFeature) => {
+      poiGeojson.features.push(geoJsonFeature)
+    };
+
+    // iterate over the routes interest points to convert it into a geoJson feature to add to poiGeoJson features array
+    // initializing variables first with arbitrary numbers:
+    let longitude = 1.0;
+    let latitude = 1.0;
+    let title = "";
+    let description = "";
+
+    <% @interest_points.each do |interest_point| %>
+      longitude = <%= interest_point.longitude %>
+      latitude = <%= interest_point.latitude %>
+      title = "<%= interest_point.title %>"
+      description = "<%= interest_point.description %>"
+      addToPoiGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
+    <% end %>
+
     // Calculate the total length
     var length = turf.length(geojson, {units: 'miles'});
     document.getElementById("distance").innerHTML = Math.round(length) + ' miles'
@@ -75,6 +113,21 @@
 
       // Geographic coordinates of the LineString
       var coordinates = geojson.features[0].geometry.coordinates;
+
+      // Add markers to map
+
+      poiGeojson.features.forEach(function(marker) {
+        // create a HTML element for each feature
+        var el = document.createElement('i');
+        el.className = 'fas fa-map-marker fa-2x';
+
+        // make a marker for each poi feature and add to the map
+        new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 })
+        .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+        .addTo(map);
+      });
 
       // Pass the first coordinates in the LineString to `lngLatBounds` &
       // wrap each coordinate pair in `extend` to include them in the bounds
