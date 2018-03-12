@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create]
     resources :favourites, only: [:create, :destroy]
   end
+
+  put 'routes/:id/set_ascent_and_distance', to: 'routes#set_ascent_and_distance'
 end

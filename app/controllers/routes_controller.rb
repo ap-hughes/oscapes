@@ -2,6 +2,7 @@ class RoutesController < ApplicationController
   require 'nokogiri'
 
   skip_before_action :authenticate_user!
+  skip_after_action :verify_authorized
   before_action :find_route, only: [:show, :edit, :update]
   def index
     if params[:query].present?
@@ -94,10 +95,21 @@ class RoutesController < ApplicationController
     join_array = points.join(",")
     @route.coordinates = join_array.prepend("[") + "]"
     if @route.save
-      redirect_to route_path(@route)
+      @coordinates = coordinates_from(@route.coordinates)
+      respond_to do |format|
+        format.js { render "create", :locals => {:coordinates => @coordinates} }
+      end
+      # redirect_to route_path(@route)
     else
       render :new
     end
+  end
+
+  def set_ascent_and_distance
+    @route = Route.find(params[:id])
+    @route.update(route_params)
+    authorize(@route)
+    head :no_content
   end
 
   private
@@ -107,7 +119,7 @@ class RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2)
+    params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent)
   end
 
   def get_difficulty_level

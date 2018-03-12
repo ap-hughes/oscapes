@@ -1,6 +1,6 @@
 <div class="container full-height">
   <p></p>
-  <%= simple_form_for @route do |f| %>
+  <%= simple_form_for @route, remote: true do |f| %>
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.file_field :upload %>
