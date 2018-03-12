@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'routes/:id/get_image', to: 'routes#get_image', as: :image
 
   resources :routes, only: [:index, :show, :edit, :update, :new, :create] do
+    get 'download', to: 'routes#download_gpx', as: :download
     resources :reviews, only: [:create]
     resources :favourites, only: [:create, :destroy]
   end

@@ -106,6 +106,12 @@ class RoutesController < ApplicationController
     end
   end
 
+  def download_gpx
+    @route = Route.find(params[:route_id])
+    authorize @route
+    write_gpx(@route)
+  end
+
   def set_ascent_and_distance
     @route = Route.find(params[:id])
     @route.update(route_params)
@@ -196,24 +202,46 @@ class RoutesController < ApplicationController
   end
 
   def coordinates_from(string)
-    # if string.start_with?("/\[\[\[/")
-      coordinates = JSON.parse(string)
-      coordinates.each do |coordinate|
-        coordinate.map { |f| '%.12f' % f }
+    coordinates = JSON.parse(string)
+    coordinates.each do |coordinate|
+      coordinate.map { |f| '%.12f' % f }
+    end
+    coordinates
+  end
+
+  def write_gpx(route)
+    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+      xml.gpx(
+      :creator              => 'Oscapes',
+      :version              => "0.0",
+      :xmlns                => "http://www.topografix.com/GPX/1/1",
+      'xmlns:xsi'           => "http://www.w3.org/2001/XMLSchema-instance",
+      'xsi:schemaLocation'  => "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+      ) do
+        if route.coordinates.start_with?("[[[")
+          coordinates = coordinates_from(route.coordinates)
+          coordinates.each do |coordinate|
+            xml.trk do
+              xml.trkseg do
+                coordinate.each do |coord|
+                  xml.trkpt(:lat => coord[1], :lon => coord[0])
+                end
+              end
+            end
+          end
+        else
+          coordinates = coordinates_from(route.coordinates)
+          xml.trk do
+            xml.trkseg do
+              coordinates.each do |coordinate|
+                xml.trkpt(:lat => coordinate[1], :lon => coordinate[0])
+              end
+            end
+          end
+        end
       end
-      coordinates
-    # else
-    #   array = string.tr("[]", "").split(",")
-    #   floats = array.map(&:to_f)
-    #   coordinates = []
-    #   i = floats.length
-    #   x = 0
-    #   while x < i
-    #     coordinates << floats[x..x+1]
-    #     x +=2
-    #   end
-    #   coordinates
-    # end
+    end
+    send_data(builder.to_xml, type: 'text/xml; charset=UTF-8;', disposition: 'attachment; filename=route.gpx')
   end
 
 end
