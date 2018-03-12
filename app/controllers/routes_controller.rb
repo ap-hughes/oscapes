@@ -108,6 +108,15 @@ class RoutesController < ApplicationController
   def set_ascent_and_distance
     @route = Route.find(params[:id])
     @route.update(route_params)
+    duration = @route.distance / 5 + (@route.ascent / 330) * 0.5
+    if duration > 20 && @route.ascent > 2000
+      difficulty = "Challenging"
+    elsif duration >20 && @route.ascent >1000
+      difficulty = "Moderate"
+    else
+      difficulty = "Easy"
+    end
+    @route.update(duration: duration, difficulty: difficulty)
     authorize(@route)
     head :no_content
   end
@@ -119,15 +128,15 @@ class RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent)
+    params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent, :duration, :difficulty)
   end
 
   def get_difficulty_level
-    if @route.difficulty == "Hard"
+    if @route.difficulty == "Challenging"
       @difficulty = 4
-    elsif @route.difficulty == "Medium"
+    elsif @route.difficulty == "Moderate"
       @difficulty = 3
-    elsif @route.difficulty == "Low"
+    elsif @route.difficulty == "Easy"
       @difficulty = 2
     else
       @difficulty = 1

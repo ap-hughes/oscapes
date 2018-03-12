@@ -23,15 +23,15 @@
     </div>
     <div class="route-info-item">
       <h4>Distance</h4>
-      <p id="distance"></p>
+      <p><%= @route.distance %> km</p>
     </div>
     <div class="route-info-item">
       <h4>Ascent</h4>
-      <p><%= @route.ascent  %></p>
+      <p><%= @route.ascent %> km</p>
     </div>
     <div class="route-info-item">
       <h4>Duration</h4>
-      <p><%= @route.duration %></p>
+      <p><%= @route.duration %> hours</p>
     </div>
   </div>
 
@@ -52,7 +52,7 @@
       Edit this route.
     </div>
   <% end %>
-  
+
 <hr>
 
 <!--   Need to update links to save and share routes -->

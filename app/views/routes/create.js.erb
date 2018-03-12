@@ -50,7 +50,7 @@
 
     let body = {
       distance: length,
-      ascent: ascent
+      ascent: ascent,
     }
 
     let token = document.getElementsByTagName('meta')[3].content
@@ -71,5 +71,7 @@
       console.log(data); // Look at local_names.default
     });
 
-    window.location.href = document.location.origin + '/routes/<%= @route.id %>'
-    }, 2000)
+    setTimeout(function() {
+      window.location.href = document.location.origin + '/routes/<%= @route.id %>'
+    }, 1000);
+    }, 2000);
