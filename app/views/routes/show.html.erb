@@ -35,6 +35,8 @@
     </div>
   </div>
 
+  <%= link_to 'Download this route (GPX)', route_download_path(@route), class: "btn btn-success" %>
+
 <div class="image-gallery">
   <div class="row">
     <% @images.each do |image| %>
@@ -62,7 +64,6 @@
     <%= render 'linestring' %>
   <% end %>
 
-  <%= link_to 'test', route_download_path(@route) %>
 
   <div class="route-reviews-container">
     <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>

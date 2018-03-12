@@ -188,13 +188,6 @@ class RoutesController < ApplicationController
   end
 
   def write_gpx(route)
-    if route.coordinates.start_with?("[[[")
-      coords = coordinates_from(route.coordinates)
-      coordinates = coords[0]
-    else
-      coordinates = coordinates_from(route.coordinates)
-    end
-
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
       xml.gpx(
       :creator              => 'Oscapes',
@@ -203,10 +196,24 @@ class RoutesController < ApplicationController
       'xmlns:xsi'           => "http://www.w3.org/2001/XMLSchema-instance",
       'xsi:schemaLocation'  => "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
       ) do
-        xml.trk do
-          xml.trkseg do
-            coordinates.each do |coordinate|
-              xml.trkpt(:lat => coordinate[1], :lon => coordinate[0])
+        if route.coordinates.start_with?("[[[")
+          coordinates = coordinates_from(route.coordinates)
+          coordinates.each do |coordinate|
+            xml.trk do
+              xml.trkseg do
+                coordinate.each do |coord|
+                  xml.trkpt(:lat => coord[1], :lon => coord[0])
+                end
+              end
+            end
+          end
+        else
+          coordinates = coordinates_from(route.coordinates)
+          xml.trk do
+            xml.trkseg do
+              coordinates.each do |coordinate|
+                xml.trkpt(:lat => coordinate[1], :lon => coordinate[0])
+              end
             end
           end
         end
