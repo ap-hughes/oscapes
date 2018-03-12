@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312123810) do
+ActiveRecord::Schema.define(version: 20180312141550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 20180312123810) do
     t.string "title"
     t.string "description"
     t.bigint "route_id"
-    t.string "longitude"
-    t.string "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "longitude"
+    t.float "latitude"
     t.index ["route_id"], name: "index_interest_points_on_route_id"
   end
 

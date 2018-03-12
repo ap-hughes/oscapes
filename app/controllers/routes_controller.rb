@@ -24,6 +24,7 @@ class RoutesController < ApplicationController
     @difficulty = get_difficulty_level
     # @coordinates = @route.coordinates.order(id: :desc).map { |coordinate| [coordinate.longitude, coordinate.latitude] }
     @coordinates = coordinates_from(@route.coordinates)
+    @interest_points = @route.interest_points #array of interest point instances
     @image_coordinates = get_image_coordinates(@coordinates)
     @center = find_center(@coordinates)
     if !@route.image_gallery_1

@@ -14,20 +14,42 @@
         }]
     };
 
-    var poiGeojson = {
+     var poiGeojson = {
       "type": 'FeatureCollection',
-      "features": [{
+      "features": []
+    };
+
+    const createGeoJsonFeature = (longitude, latitude, title, description) => {
+      return {
         "type": 'Feature',
         "geometry": {
           "type": 'Point',
-          "coordinates": [-2.359608, 51.381171]
+          "coordinates": [longitude, latitude]
         },
         "properties": {
-          "title": 'The Roman Baths',
-          "description": 'Roman bathhouse and temple, with spring water, restaurant and museum tour'
+          "title": title,
+          "description": description
         }
-      }]
+      }
     };
+
+    const addToPoiGeoJson = (geoJsonFeature) => {
+      poiGeojson.features.push(geoJsonFeature)
+    };
+
+    // iterate over the routes interest points to convert it into a geoJson feature to add to poiGeoJson features array
+    let longitude = 1.0;
+    let latitude = 1.0;
+    let title = "";
+    let description = "";
+
+    <% @interest_points.each do |interest_point| %>
+      longitude = <%= interest_point.longitude %>
+      latitude = <%= interest_point.latitude %>
+      title = "<%= interest_point.title %>"
+      description = "<%= interest_point.description %>"
+      addToPoiGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
+    <% end %>
 
     // Calculate the total length
     var length = turf.length(geojson, {units: 'miles'});
