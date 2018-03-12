@@ -52,7 +52,7 @@
       Edit this route.
     </div>
   <% end %>
-  
+
 <hr>
 
 <!--   Need to update links to save and share routes -->
@@ -61,6 +61,8 @@
   <% else %>
     <%= render 'linestring' %>
   <% end %>
+
+  <%= link_to 'test', route_download_path(@route) %>
 
   <div class="route-reviews-container">
     <h3><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span> (put average rating here)</h3>

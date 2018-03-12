@@ -21,4 +21,8 @@ class RoutePolicy < ApplicationPolicy
   def create?
     true
   end
+
+  def download_gpx?
+    true
+  end
 end
