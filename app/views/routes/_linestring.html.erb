@@ -14,32 +14,67 @@
         }]
     };
 
-    // Calculate the total length
-    var length = turf.length(geojson, {units: 'miles'});
-    document.getElementById("distance").innerHTML = Math.round(length) + ' miles'
+    // // Calculate the total length
+    // var length = turf.length(geojson);
+    // document.getElementById("distance").innerHTML = Math.round(length) + ' km'
 
-    // Calculate the total ascent
-    // points will be a feature collection
-    var points = turf.explode(geojson);
-    section = points["features"].slice(1800,2000);
-    // Get the elevation of each point
-    // var elevation = []
-    // section.forEach (function(element, index) {
-    //   lon_first = section[index]["geometry"]["coordinates"][0];
-    //   lat_first = section[index]["geometry"]["coordinates"][1];
+    // // Calculate the total ascent
+    // // points will be a feature collection
+    // var points = turf.explode(geojson);
+    // var points_array = points["features"]
+    // var select_points = points_array.filter(function(value, index, Arr) {
+    //   return index % 20 == 0;
+    // });
+    // // Get the elevation of each point
+    // let elevation = []
+    // select_points.forEach (function(element, index) {
+    //   lon_first = select_points[index]["geometry"]["coordinates"][0];
+    //   lat_first = select_points[index]["geometry"]["coordinates"][1];
     //    var feature_collection_url = `https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${lon_first},${lat_first}.json?&access_token=pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w`;
     //   fetch(feature_collection_url)
     //     .then(response => response.json())
     //     .then((data) => {
-    //       var feature_collection = data;
-    //       var features = feature_collection['features']
-    //       var last = features.pop();
-    //       console.log(last);
-    //       var ele = last['properties']['ele'];
-    //       elevation.push(ele);
+    //       data.features.forEach(function(feature, index) {
+    //         if (feature.properties.tilequery.layer === 'contour') {
+    //           elevation.push(feature.properties.ele)
+    //         }
+    //       })
     //     });
     // });
-    // console.log(elevation);
+
+    // let ascent = 0
+    // setTimeout(function() {
+    //   elevation.forEach(function(ele, index) {
+    //     if (index < elevation.length - 1) {
+    //       if (ele < elevation[index + 1]) {
+    //         ascent += elevation[index + 1] - ele
+    //       }
+    //     }
+    //   })
+
+    // let body = {
+    //   distance: length,
+    //   ascent: ascent
+    // }
+
+    // let token = document.getElementsByTagName('meta')[3].content
+
+    // fetch('/routes/<%= @route.id %>/set_ascent_and_distance', {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //     'X-Requested-With': 'XMLHttpRequest',
+    //     'X-CSRF-TOKEN': token
+    //   },
+    //   credentials: 'same-origin',
+    //   body: JSON.stringify(body)
+    // })
+    // .then(response => response.json())
+    // .then((data) => {
+    //   console.log(data); // Look at local_names.default
+    // });
+    // }, 2000)
 
     // Loading the map
     mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
