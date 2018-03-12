@@ -14,6 +14,21 @@
         }]
     };
 
+    var poiGeojson = {
+      "type": 'FeatureCollection',
+      "features": [{
+        "type": 'Feature',
+        "geometry": {
+          "type": 'Point',
+          "coordinates": [-2.359608, 51.381171]
+        },
+        "properties": {
+          "title": 'The Roman Baths',
+          "description": 'Roman bathhouse and temple, with spring water, restaurant and museum tour'
+        }
+      }]
+    };
+
     // Calculate the total length
     var length = turf.length(geojson, {units: 'miles'});
     document.getElementById("distance").innerHTML = Math.round(length) + ' miles'
@@ -75,6 +90,21 @@
 
       // Geographic coordinates of the LineString
       var coordinates = geojson.features[0].geometry.coordinates;
+
+      // Add markers to map
+
+      poiGeojson.features.forEach(function(marker) {
+        // create a HTML element for each feature
+        var el = document.createElement('i');
+        el.className = 'fas fa-map-marker fa-2x';
+
+        // make a marker for each poi feature and add to the map
+        new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 })
+        .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+        .addTo(map);
+      });
 
       // Pass the first coordinates in the LineString to `lngLatBounds` &
       // wrap each coordinate pair in `extend` to include them in the bounds
