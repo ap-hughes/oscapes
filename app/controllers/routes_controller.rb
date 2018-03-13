@@ -16,6 +16,7 @@ class RoutesController < ApplicationController
       # .where(sql_query, query: "%#{params[:query]}%")
     else
       @routes = policy_scope(Route).order(created_at: :desc)
+      # starting_coordinates(@routes)
     end
   end
 
@@ -28,6 +29,7 @@ class RoutesController < ApplicationController
     @interest_points = @route.interest_points #array of interest point instances
     @image_coordinates = get_image_coordinates(@coordinates)
     @center = find_center(@coordinates)
+    @average_rating = get_average_rating(@route)
     if !@route.image_gallery_1
       get_images(@image_coordinates)
     end
@@ -95,6 +97,8 @@ class RoutesController < ApplicationController
     end
     join_array = points.join(",")
     @route.coordinates = join_array.prepend("[") + "]"
+    lat_long = get_starting_ending_coordinates(@route)
+    set_lat_long_attributes(lat_long)
     if @route.save
       @coordinates = coordinates_from(@route.coordinates)
       respond_to do |format|
@@ -138,6 +142,20 @@ class RoutesController < ApplicationController
     params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent, :duration, :difficulty)
   end
 
+  def get_average_rating(route)
+    reviews = route.reviews
+    if reviews == []
+      average_rating = nil
+    else
+      ratings = []
+      reviews.each do |review|
+        ratings << review.rating
+      end
+      average_rating = "%.1f" % ratings.reduce(:+).fdiv(ratings.length)
+    end
+    average_rating
+  end
+
   def get_difficulty_level
     if @route.difficulty == "Challenging"
       @difficulty = 4
@@ -149,6 +167,22 @@ class RoutesController < ApplicationController
       @difficulty = 1
     end
   end
+
+    # def starting_coordinates(routes)
+  #   @start_coordinates = []
+  #   routes.each do |route|
+  #     if route.coordinates.start_with?("[[[")
+  #       coordinates = coordinates_from(route.coordinates)
+  #       first_coordinates = coordinates.first.first
+  #       @start_coordinates << first_coordinates
+  #     else
+  #       coordinates = coordinates_from(route.coordinates)
+  #       first_coordinates = coordinates.first
+  #       @start_coordinates << first_coordinates
+  #     end
+  #   end
+  #   @start_coordinates
+  # end
 
   def get_image_coordinates(coordinates)
     if @route.coordinates.start_with?("[[[")
@@ -207,6 +241,37 @@ class RoutesController < ApplicationController
       coordinate.map { |f| '%.12f' % f }
     end
     coordinates
+  end
+
+  #two methods to get and set the starting and ending latitudes and longitudes:
+  def get_starting_ending_coordinates(route)
+      # if route.coordinates.start_with?("[[[")
+      #   coordinates = coordinates_from(route.coordinates)
+      #   start_latitude = coordinates.first.first.first
+      #   start_longitude = coordinates.first.first.last
+      #   end_latitude = coordinates.first.last.first
+      #   end_longitude = coordinates.first.last.last
+      #   @start_coordinates << first_coordinates
+      # else
+      #   coordinates = coordinates_from(route.coordinates)
+      #   first_coordinates = coordinates.first
+      #   @start_coordinates << first_coordinates
+      # end
+    coordinates = coordinates_from(route.coordinates)
+    {
+      start_latitude: coordinates.first.first,
+      start_longitude: coordinates.first.last,
+      end_latitude: coordinates.last.first,
+      end_longitude: coordinates.last.last
+    }
+  end
+
+  def set_lat_long_attributes(lat_long_hash)
+    @route.start_latitude = lat_long_hash[:start_latitude]
+    @route.start_longitude = lat_long_hash[:start_longitude]
+    @route.end_latitude = lat_long_hash[:end_latitude]
+    @route.end_longitude = lat_long_hash[:end_longitude]
+    @route.save!
   end
 
   def write_gpx(route)

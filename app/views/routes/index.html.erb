@@ -50,9 +50,7 @@
                 <div class="route-creator"><p>By <%= route.user.first_name %></p></div>
               </div>
             </div>
-
           </div>
-
           <div class="description-box">
             <div class="description-text">
               <p>Here is a little description of the route...</p>
@@ -66,11 +64,71 @@
 </div>
 
 <script>
+  // loading the map
   mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v10',
-    center: [-77.034084, 38.909671],
+    center: [-0.1454544, 50.9241143],
     zoom: 10
   });
+
+  // initializing indexGeojson to use to add markers later
+  var indexGeojson = {
+    "type": 'FeatureCollection',
+    "features": []
+  };
+
+  // helper function to create geoJson "feature"
+  const createGeoJsonFeature = (longitude, latitude, title, description) => {
+    return {
+      "type": 'Feature',
+      "geometry": {
+        "type": 'Point',
+        "coordinates": [longitude, latitude]
+      },
+      "properties": {
+        "title": title,
+        "description": description
+      }
+    }
+  };
+
+  // helper function to add feature to indexGeoJson
+  const addToGeoJson = (geoJsonFeature) => {
+    indexGeojson.features.push(geoJsonFeature)
+  };
+
+  // add the data to the indexGeojson
+  let longitude = 1.0;
+  let latitude = 1.0;
+  let title = "";
+  let description = "";
+
+  <% @routes.each do |route| %>
+    longitude = <%= route.start_longitude %>
+    latitude = <%= route.start_latitude %>
+    title = "<%= route.name %>"
+    description = "<%= route.description %>"
+    addToGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
+  <% end %>
+
+  map.on('load', function(e) {
+  // Add the data to your map as a layer
+    map.addLayer({
+      id: 'locations',
+      type: 'symbol',
+      // Add a GeoJSON source containing place coordinates and information.
+      source: {
+        type: 'geojson',
+        data: indexGeojson
+      },
+      layout: {
+        'icon-image': 'restaurant-15',
+        'icon-allow-overlap': true,
+      }
+    });
+  });
+
+
 </script>
