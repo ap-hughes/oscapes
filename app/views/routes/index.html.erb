@@ -1,40 +1,15 @@
-<div class="wrapper">
-  <div class="container full-height">
-    <div id="search-field">
-      <%= form_tag routes_path, method: :get do %>
-        <%= text_field_tag :query,
-          params[:query],
-          class: "form-control",
-          placeholder: "Find a hike by name or description, difficulty, duration, ascent, distance..."
-        %>
-      <% end %>
-    </div>
-    <% if @query.nil? %>
-      <h1 id="query-header" class="text-center"></h1>
-    <% else %>
-      <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
-    <% end %>
-    <div class="row">
-      <% @routes.each do |route| %>
-        <%= link_to route_path(route) do %>
-          <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="card" style="background-image: url('<%= route.hero_image %>')">
-              <div class="card-hover">
-                <div class="card-content">
-                  <h2><%= route.name %></h2>
-                  <p>50km | 3 Days</p>
-                  <p>Easy | 1km Ascent</p>
-                  <p>
-                  <% 4.times do %>
-                    <i class="glyphicon glyphicon-star"></i>
-                  <% end %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+<div class="map-container">
+  <div class='sidebar pad2'>Listings...</div>
+  <div id='map' class='map pad2'></div>
 </div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/outdoors-v10',
+    center: [-77.034084, 38.909671],
+    zoom: 10
+  });
+</script>
+

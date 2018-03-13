@@ -1,14 +1,35 @@
 #map {
-  margin: 20px auto;
-  width: 1000px;
-  height: 500px;
+  height: calc(100vh - 70px);
+  padding: 0;
 }
-
 .mapboxgl-popup {
   max-width: 200px;
 }
-
 .mapboxgl-popup-content {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
+}
+.map-container {
+  display: flex;
+  align-items: center;
+}
+/* The page is split between map and sidebar - the sidebar gets 1/3, map
+gets 2/3 of the page. You can adjust this to your personal liking. */
+.sidebar {
+  width: 60%;
+  height: calc(100vh - 70px);
+}
+.map {
+  border-left: 1px solid #fff;
+  position: absolute;
+  // left: 60%;
+  width: 40%;
+  top: 0;
+  bottom: 0;
+}
+.pad2 {
+  padding: 20px;
+  // -box-sizing: border-box;
+  // -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
