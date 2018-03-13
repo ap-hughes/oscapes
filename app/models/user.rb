@@ -9,6 +9,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :ability, inclusion: { in: ["Beginner", "Intermediate", "Advanced"] }
+  validates :email, uniqueness: true, presence: true
+  validates :ability, inclusion: { in: ["Beginner", "Intermediate", "Advanced", nil] }
   mount_uploader :photo, PhotoUploader
 end
