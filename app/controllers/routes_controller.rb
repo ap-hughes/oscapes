@@ -16,6 +16,7 @@ class RoutesController < ApplicationController
       # .where(sql_query, query: "%#{params[:query]}%")
     else
       @routes = policy_scope(Route).order(created_at: :desc)
+      starting_coordinates(@routes)
     end
   end
 
@@ -136,6 +137,22 @@ class RoutesController < ApplicationController
 
   def route_params
     params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent, :duration, :difficulty)
+  end
+
+  def starting_coordinates(routes)
+    @start_coordinates = []
+    routes.each do |route|
+      if route.coordinates.start_with?("[[[")
+        coordinates = coordinates_from(route.coordinates)
+        first_coordinates = coordinates.first.first
+        @start_coordinates << first_coordinates
+      else
+        coordinates = coordinates_from(route.coordinates)
+        first_coordinates = coordinates.first
+        @start_coordinates << first_coordinates
+      end
+    end
+    @start_coordinates
   end
 
   def get_difficulty_level
