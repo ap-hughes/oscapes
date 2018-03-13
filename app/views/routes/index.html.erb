@@ -69,9 +69,12 @@
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v10',
-    center: [-0.1454544, 50.9241143],
-    zoom: 10
+    center: [-4.07750412, 54.68907436],
+    zoom: 5
   });
+
+  // Navigation controls
+  map.addControl(new mapboxgl.NavigationControl());
 
   // initializing indexGeojson to use to add markers later
   var indexGeojson = {
