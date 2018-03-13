@@ -9,7 +9,7 @@
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v10',
-    center: [-77.034084, 38.909671],
+    center: [-0.1454544, 50.9241143],
     zoom: 10
   });
 
@@ -46,10 +46,10 @@
   let description = "";
 
   <% @routes.each do |route| %>
-    longitude = <%= route.start_longitude %>;
-    latitude = <%= route.end_latitude %>;
-    title = "<%= route.name %>";
-    description = "<%= route.description %>";
+    longitude = <%= route.start_longitude %>
+    latitude = <%= route.start_latitude %>
+    title = "<%= route.name %>"
+    description = "<%= route.description %>"
     addToGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
   <% end %>
 
@@ -64,7 +64,7 @@
         data: indexGeojson
       },
       layout: {
-        'icon-image': 'map_icon',
+        'icon-image': 'restaurant-15',
         'icon-allow-overlap': true,
       }
     });
