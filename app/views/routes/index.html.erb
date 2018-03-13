@@ -1,40 +1,75 @@
-<div class="wrapper">
-  <div class="container full-height">
-    <div id="search-field">
-      <%= form_tag routes_path, method: :get do %>
-        <%= text_field_tag :query,
-          params[:query],
-          class: "form-control",
-          placeholder: "Find a hike by name or description, difficulty, duration, ascent, distance..."
-        %>
-      <% end %>
-    </div>
-    <% if @query.nil? %>
-      <h1 id="query-header" class="text-center"></h1>
-    <% else %>
-      <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
-    <% end %>
-    <div class="row">
-      <% @routes.each do |route| %>
-        <%= link_to route_path(route) do %>
-          <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="card" style="background-image: url('<%= route.hero_image %>')">
-              <div class="card-hover">
-                <div class="card-content">
-                  <h2><%= route.name %></h2>
-                  <p>50km | 3 Days</p>
-                  <p>Easy | 1km Ascent</p>
-                  <p>
-                  <% 4.times do %>
-                    <i class="glyphicon glyphicon-star"></i>
-                  <% end %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+<div class="map-container">
+  <div class='sidebar pad2'>Listings...</div>
+  <div id='map' class='map pad2'></div>
 </div>
+
+<script>
+  // loading the map
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/outdoors-v10',
+    center: [-0.1454544, 50.9241143],
+    zoom: 10
+  });
+
+  // initializing indexGeojson to use to add markers later
+  var indexGeojson = {
+    "type": 'FeatureCollection',
+    "features": []
+  };
+
+  // helper function to create geoJson "feature"
+  const createGeoJsonFeature = (longitude, latitude, title, description) => {
+    return {
+      "type": 'Feature',
+      "geometry": {
+        "type": 'Point',
+        "coordinates": [longitude, latitude]
+      },
+      "properties": {
+        "title": title,
+        "description": description
+      }
+    }
+  };
+
+  // helper function to add feature to indexGeoJson
+  const addToGeoJson = (geoJsonFeature) => {
+    indexGeojson.features.push(geoJsonFeature)
+  };
+
+  // add the data to the indexGeojson
+  let longitude = 1.0;
+  let latitude = 1.0;
+  let title = "";
+  let description = "";
+
+  <% @routes.each do |route| %>
+    longitude = <%= route.start_longitude %>
+    latitude = <%= route.start_latitude %>
+    title = "<%= route.name %>"
+    description = "<%= route.description %>"
+    addToGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
+  <% end %>
+
+  map.on('load', function(e) {
+  // Add the data to your map as a layer
+    map.addLayer({
+      id: 'locations',
+      type: 'symbol',
+      // Add a GeoJSON source containing place coordinates and information.
+      source: {
+        type: 'geojson',
+        data: indexGeojson
+      },
+      layout: {
+        'icon-image': 'restaurant-15',
+        'icon-allow-overlap': true,
+      }
+    });
+  });
+
+
+</script>
+
