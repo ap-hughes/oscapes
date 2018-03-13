@@ -1,3 +1,52 @@
+<div class="map-container">
+  <div class='sidebar'>
+    <div class="heading pad2">
+      <h1>Routes</h1>
+    </div>
+    <% @routes.each do |route| %>
+      <div id='listings' class='listings'>
+        <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
+        <div class="route-name"><h3><%= route.name %></h3></div>
+        <div class="card-bookmark">
+          <%= link_to route_favourites_path(route.id), method: :post do %>
+            <i class="fa fa-bookmark"></i>
+          <% end %>
+        </div>
+        <div class="route-details">
+          <div class="route-attribute">
+            <p><i class="fas fa-arrows-alt-h"></i>
+              <%= route.distance %>km</p>
+          </div>
+          <div class="route-attribute">
+            <p><i class="fas fa-long-arrow-alt-up"></i> <%= route.ascent %>m</p>
+          </div>
+          <div class="route-attribute">
+            <p><i class="far fa-clock"></i>
+              <% if route.duration == nil %> hours
+              <% elsif route.duration > 24 %>
+                <%= route.duration/12 %> days
+              <% else %>
+                <%= route.duration %> hours
+              </p>
+              <% end %>
+          </div>
+        </div>
+        <div class="route-creator"><p>By <%= route.user.first_name %></p></div>
+      </div>
+    <% end %>
+  </div>
+  <div id='map' class='map pad2'></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/outdoors-v10',
+    center: [-77.034084, 38.909671],
+    zoom: 10
+  });
+</script>
 <div class="wrapper">
   <div class="container full-height">
     <div id="search-field">
@@ -9,6 +58,8 @@
         %>
       <% end %>
     </div>
+
+
     <% if @query.nil? %>
       <h1 id="query-header" class="text-center"></h1>
     <% else %>
