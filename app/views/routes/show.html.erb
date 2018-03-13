@@ -1,43 +1,66 @@
 <!-- Placeholder image - not added to model at the moment -->
 
 <!-- <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1515523592004-96338c887fb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ef98762b97ad1e860eb9a3cc937492d6&auto=format&fit=crop&w=1050&q=80')"> -->
-<div class="hero-image" style="background-image: url('<%= @route.hero_image %>')">
-  <h1><%= @route.name %></h1>
-  <%= link_to route_favourites_path(@route), method: :post do %>
-    <i class="fa fa-bookmark"></i>
-  <% end %>
-  <%= link_to route_favourites_path(@route), method: :post do %>
-    <i class="fa fa-share"></i>
-  <% end %>
+
+<div class="route-header">
+
+  <div class="hero-image" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.4), rgba(0,0,0,0.3)), url('<%= @route.hero_image %>')">
+
+    <div class="container route-info-container">
+      <div class="hero-content">
+        <h1><%= @route.name %></h1>
+        <%= link_to route_favourites_path(@route), method: :post do %>
+          <div class="save-button">
+            <i class="fa fa-bookmark"></i>
+            <p>Save</p>
+          </div>
+        <% end %>
+      </div>
+      <div class="key-details">
+        <p class="difficulty"><%= @route.difficulty %> route</p>
+
+      <% if @average_rating %>
+        <div class="ratings-block">
+          <%= link_to "#reviews" do %>
+            <% @average_rating.to_i.times do %>
+               <i class="glyphicon glyphicon-star"></i>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+        <div class="route-info-item">
+          <%= image_tag "distance.svg" %>
+          <p>Distance: <%= @route.distance %> km</p>
+        </div>
+        <div class="route-info-item">
+          <%= image_tag "ascent.svg" %>
+          <p>Ascent: <%= @route.ascent %> m</p>
+        </div>
+        <div class="route-info-item">
+          <%= image_tag "duration.svg" %>
+          <p>Estimated duration: <%= @route.duration %> hours</p>
+        </div>
+<!--         <div class="route-info-item">
+          <h4>Difficulty</h4>
+          <%= image_tag "hike_level_#{@difficulty}.svg" %>
+        </div> -->
+      <%= link_to 'Download this route (GPX)', route_download_path(@route), class: "btn btn-success center-block" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="description-block">
+      <p><%= @route.description %></p>
+    </div>
+  </div>
+
+
+
 </div>
 
-<div class="container">
-  <div class="route-info-desc">
-    <p><%= @route.description %></p>
-  </div>
-
-  <div class="route-info">
-    <div class="route-info-item">
-      <h4>Difficulty</h4>
-      <%= image_tag "hike_level_#{@difficulty}.svg" %>
-    </div>
-    <div class="route-info-item">
-      <h4>Distance</h4>
-      <p><%= @route.distance %> km</p>
-    </div>
-    <div class="route-info-item">
-      <h4>Ascent</h4>
-      <p><%= @route.ascent %> m</p>
-    </div>
-    <div class="route-info-item">
-      <h4>Duration</h4>
-      <p><%= @route.duration %> hours</p>
-    </div>
-  </div>
-
-  <%= link_to 'Download this route (GPX)', route_download_path(@route), class: "btn btn-success" %>
-
-<div class="image-gallery">
+<!-- <div class="image-gallery">
   <div class="row">
     <% @images.each do |image| %>
       <div class="col-xs-12 col-md-4">
@@ -47,13 +70,13 @@
       </div>
     <% end %>
   </div>
-</div>
+</div> -->
 
-  <%= link_to edit_route_path do %>
+<!--   <%= link_to edit_route_path do %>
     <div class="btn">
       Edit this route.
     </div>
-  <% end %>
+  <% end %> -->
 
 <hr>
 

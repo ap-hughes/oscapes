@@ -28,6 +28,7 @@ class RoutesController < ApplicationController
     @interest_points = @route.interest_points #array of interest point instances
     @image_coordinates = get_image_coordinates(@coordinates)
     @center = find_center(@coordinates)
+    @average_rating = get_average_rating(@route)
     if !@route.image_gallery_1
       get_images(@image_coordinates)
     end
@@ -136,6 +137,20 @@ class RoutesController < ApplicationController
 
   def route_params
     params.require(:route).permit(:user_id, :name, :description, :coordinates, :hero_image, :image_gallery_1, :image_gallery_2, :distance, :ascent, :duration, :difficulty)
+  end
+
+  def get_average_rating(route)
+    reviews = route.reviews
+    if reviews == []
+      average_rating = nil
+    else
+      ratings = []
+      reviews.each do |review|
+        ratings << review.rating
+      end
+      average_rating = "%.1f" % ratings.reduce(:+).fdiv(ratings.length)
+    end
+    average_rating
   end
 
   def get_difficulty_level
