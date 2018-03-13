@@ -1,5 +1,65 @@
 <div class="map-container">
-  <div class='sidebar pad2'>Listings...</div>
+  <div class='sidebar'>
+    <div class="heading pad2">
+      <h1>Search Routes</h1>
+      <div id="search-field">
+        <%= form_tag routes_path, method: :get do %>
+          <%= text_field_tag :query,
+            params[:query],
+            class: "form-control",
+            placeholder: "Find a hike by name or description, difficulty, duration, ascent, distance..."
+          %>
+        <% end %>
+      </div>
+      <% if @query.nil? %>
+        <h1 id="query-header" class="text-center"></h1>
+      <% else %>
+        <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
+      <% end %>
+    </div>
+    <% @routes.each do |route| %>
+      <%= link_to route_path(route) do %>
+        <div id='listings' class='listings'>
+          <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
+          <div class="listing-info">
+            <div class="route-name"><h3><%= route.name %></h3></div>
+            <div class="card-bookmark">
+              <%= link_to route_favourites_path(route), method: :post do %>
+                <i class="fa fa-bookmark"></i>
+              <% end %>
+            </div>
+            <div class="listing-bottom-info">
+              <div class="route-details">
+                <div class="route-attribute">
+                  <p><i class="fas fa-arrows-alt-h"></i>
+                    <%= route.distance %>km</p>
+                </div>
+                <div class="route-attribute">
+                  <p><i class="fas fa-long-arrow-alt-up"></i> <%= route.ascent %>m</p>
+                </div>
+                <div class="route-attribute">
+                  <p><i class="far fa-clock"></i>
+                    <% if route.duration == nil %> hours
+                    <% elsif route.duration > 24 %>
+                      <%= route.duration/12 %> days
+                    <% else %>
+                      <%= route.duration %> hours
+                    </p>
+                    <% end %>
+                </div>
+                <div class="route-creator"><p>By <%= route.user.first_name %></p></div>
+              </div>
+            </div>
+          </div>
+          <div class="description-box">
+            <div class="description-text">
+              <p>Here is a little description of the route...</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
   <div id='map' class='map pad2'></div>
 </div>
 
@@ -72,4 +132,3 @@
 
 
 </script>
-
