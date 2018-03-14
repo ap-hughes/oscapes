@@ -27,7 +27,7 @@
         <h1 id="query-header" class="text-center"></h1>
       <% else %>
         <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
-      <% end %>
+      <!-- <% end %> -->
 
     <div id="listings" class="listings">
       <% i = 0 %>
@@ -55,7 +55,7 @@
                     <p><i class="far fa-clock"></i>
                       <% if route.duration == nil %> hours
                       <% elsif route.duration > 24 %>
-                        <%= route.duration/12 %> days
+                        <%= route.duration/10 %> days
                       <% else %>
                         <%= route.duration %> hours
                       </p>
