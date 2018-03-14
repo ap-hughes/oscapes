@@ -1,0 +1,11 @@
+#filter-bar {
+  // position: fixed;
+  // z-index: 2;
+  padding: 20px;
+  background: white;
+  width: 100%;
+  box-shadow: 0 3px 2px -2px $lightest-green;
+  input {
+    margin: 10px;
+  }
+}

@@ -9,8 +9,9 @@ class Route < ApplicationRecord
 
   include PgSearch
   pg_search_scope :search_by_route_attributes,
-    against: [ :name, :description, :difficulty, :duration, :ascent, :distance ],
+    against: [ :name, :description, :duration, :ascent, :distance ],
     using: {
       tsearch: { prefix: true }
     }
+
 end
