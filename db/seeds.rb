@@ -129,7 +129,7 @@ InterestPoint.create!(title: "Lewes", description: "Lewes is sited along the Aru
 InterestPoint.create!(title: "Alfriston", description: "Walk around Alfriston's village green, explore the village’s old centre and buildings, or set up for the evening in one of the old English pubs. There are also tea shops serving cream teas and a mean breakfast too.", route: south_downs_way, longitude: 0.1565, latitude: 50.8080)
 InterestPoint.create!(title: "Eastbourne", description: "A classic British seaside resort, Eastbourne has a large beach and promenade to explore. There are plenty of places to stay. The town is also connected by rail.", route: south_downs_way, longitude: 0.2905, latitude: 50.7680)
 
-# WAAAIIITT .... NEED TO ADD PEMBROKESHIRE COAST PATH ROUTE...
+# NEED TO ADD PEMBROKESHIRE COAST PATH ROUTE...
 # puts "Creating POI for Pembrokeshire Coast Path"
 # InterestPoint.create!(title: "St Dogmaels", description: "St Dogmaels is a village set on the estuary of the River Teifi. It is home to a 12th century Abbey and one of only two working watermills in Wales.", route: peddars_way_norfolk_coast, longitude: -4.6830, latitude: 52.0815)
 
