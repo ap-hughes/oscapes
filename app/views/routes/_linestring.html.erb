@@ -1,4 +1,7 @@
-  <div id='map'></div>
+<div class="map-container">
+  <%= render 'show_sidebar' %>
+  <div id='map' class="show-map pad2"></div>
+</div>
 
   <script>
 
@@ -13,6 +16,44 @@
             }
         }]
     };
+
+  var poiGeojson = {
+    "type": 'FeatureCollection',
+    "features": []
+  };
+
+  const createGeoJsonFeature = (longitude, latitude, title, description) => {
+    return {
+      "type": 'Feature',
+      "geometry": {
+        "type": 'Point',
+        "coordinates": [longitude, latitude]
+      },
+      "properties": {
+        "title": title,
+        "description": description
+      }
+    }
+  };
+
+  const addToPoiGeoJson = (geoJsonFeature) => {
+    poiGeojson.features.push(geoJsonFeature)
+  };
+
+  // iterate over the routes interest points to convert it into a geoJson feature to add to poiGeoJson features array
+  // initializing variables first with arbitrary numbers:
+  let longitude = 1.0;
+  let latitude = 1.0;
+  let title = "";
+  let description = "";
+
+  <% @interest_points.each do |interest_point| %>
+    longitude = <%= interest_point.longitude %>
+    latitude = <%= interest_point.latitude %>
+    title = "<%= interest_point.title %>"
+    description = "<%= interest_point.description %>"
+    addToPoiGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
+  <% end %>
 
     // // Calculate the total length
     // var length = turf.length(geojson);
@@ -124,4 +165,79 @@
           padding: 40
       });
     });
+
+    // Add points of interest markers to map
+  poiGeojson.features.forEach(function(marker) {
+    // create a HTML element for each feature
+    var el = document.createElement('i');
+    el.className = 'fas fa-flag fa-2x';
+
+    // make a marker for each poi feature and add to the map
+    new mapboxgl.Marker(el)
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+    el.addEventListener('click', (e) => {
+      flyToRoute(marker);
+      createPopUp(marker);
+      e.stopPropagation();
+      // if (activeItem[0]) {
+      //   activeItem[0].classList.remove('active');
+      // }
+      // var listing = document.getElementById('listing-' + i);
+      // console.log(listing);
+      // listing.classList.add('active');
+    })
+  });
+
+  // linking the sidebar to the map
+  // function to make the map fly to the route
+  function flyToRoute(currentFeature) {
+    map.flyTo({
+      center: currentFeature.geometry.coordinates,
+      // zoom: 15
+    });
+  }
+
+  function createPopUp(currentFeature) {
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    if (popUps[0]) popUps[0].remove();
+
+    var popup = new mapboxgl.Popup({ offset: 25 })
+      .setLngLat(currentFeature.geometry.coordinates)
+      .setHTML('<h5>' + currentFeature.properties.title + '</h5><p>' + currentFeature.properties.description + '</p>')
+      .addTo(map);
+  }
+
+ // this is so it is possible to use .remove() function in older browsers
+  if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function() {
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
+      }
+    };
+  }
+
+  const pointLinks = document.querySelectorAll('.point-link');
+  pointLinks.forEach((element) => {
+  // Add an event listener for the links in the sidebar listing
+    element.addEventListener('click', function(e) {
+      // Update the currentFeature to the store associated with the clicked link
+      var clickedListing = poiGeojson.features[this.dataset.position];
+      // 1. Fly to the point associated with the clicked link
+      flyToRoute(clickedListing);
+      // 2. Close all other popups and display popup for clicked route
+      createPopUp(clickedListing);
+      // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+      var activeItem = document.getElementsByClassName('active');
+      if (activeItem[0]) {
+        activeItem[0].classList.remove('active');
+      }
+      this.parentNode.classList.add('active');
+      // console.log(this.parentNode);
+    });
+  })
   </script>

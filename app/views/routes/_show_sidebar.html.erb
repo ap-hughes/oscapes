@@ -1,0 +1,15 @@
+<div class='show-sidebar'>
+  <div class="heading pad2">
+    <h4>Points of Interest</h4>
+  </div>
+  <div id="listings" class="listings">
+    <% i = 0 %>
+    <% @interest_points.each do |interest_point| %>
+      <div id='listing-<%= i %>' class='listing' data-position='<%= i %>'>
+        <h3 class="point-link" data-position="<%= i %>"><%= interest_point.title %></h3>
+        <% i += 1 %>
+        <p><%= interest_point.description %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

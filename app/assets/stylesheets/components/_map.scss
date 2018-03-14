@@ -127,3 +127,20 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .green-marker {
   color: $green;
 }
+
+.show-sidebar {
+  width: 40%;
+  height: calc(100vh - 70px);
+  top: 0;
+  left: 0;
+  overflow: scroll;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+.show-map {
+  border-left: 1px solid #fff;
+  position: absolute;
+  // left: 60%;
+  width: 60%;
+  top: 0;
+  bottom: 0;
+}
