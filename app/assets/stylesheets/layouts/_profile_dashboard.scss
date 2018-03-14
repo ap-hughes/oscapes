@@ -25,9 +25,6 @@
   box-shadow: 0px 0px 3px 0px #6FCF97;
   border-radius: 5px;
   background-color: white;
-  // .review-box:last-child {
-  //   margin-bottom:20px;
-  // }
 }
 
 .review-box:last-child {
@@ -40,12 +37,8 @@
 }
 
 .review-box {
-  // border-radius: 5px;
-  // box-shadow: 0px 0px 3px 0px #6FCF97;
-  // padding: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #6FCF97;
-  // width: 60%;
   position: relative;
 
   a {
@@ -57,9 +50,21 @@
   }
 }
 
-#bio-text:hover {
-  box-shadow: 0px 0px 3px 0px #6FCF97;
+.avatar-container {
+  position: relative;
+  #edit-profile-pic {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+  }
 }
+
+.edit-button {
+  margin-left: 20px;
+}
+// #bio-text:hover {
+//   box-shadow: 0px 0px 3px 0px #6FCF97;
+// }
 
 @media(max-width: 750px) {
   .flexbox-container {

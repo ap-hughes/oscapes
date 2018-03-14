@@ -1,29 +1,47 @@
 <div class="flexbox-container">
   <div id="profile-sidebar">
-    <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
-    <h2><%= @user.first_name %> <%= @user.last_name %></h2>
-    <h5><%= @user.community_level %></h5>
-    <h5><%= @user.ability %></h5>
-    <% if @user == current_user %>
-    <div class="photo-form">
-      <%= simple_form_for(@user) do |f| %>
-        <%= f.input :photo, label: false, class: "form-control" %>
-        <%= f.button :submit, "Update Photo", class: "btn btn-success"  %>
+    <div class="avatar-container">
+      <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
+      <% if @user == current_user %>
+        <i id="edit-profile-pic" class="far fa-edit"></i>
       <% end %>
     </div>
-  <% end %>
-     <% if @user == current_user %>
-      <%= simple_form_for(@user) do |f| %>
-        <%= f.input :ability, label: false, class: "form-control" %>
-        <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
+    <h2><%= @user.first_name %> <%= @user.last_name %></h2>
+    <h5><%= @user.community_level %></h5>
+    <h5 id="user-ability-text">
+      <%= @user.ability %>
+      <% if @user == current_user %>
+        <i id="edit-ability-icon" class="far fa-edit"></i>
       <% end %>
+    </h5>
+    <% if @user == current_user %>
+      <div id="user-ability-form" class="hidden">
+        <%= simple_form_for(@user) do |f| %>
+          <%= f.input :ability, label: false, class: "form-control" %>
+          <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
+          <i id="cancel-ability-update-button" class="far fa-times-circle fa-lg edit-button hidden"></i>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @user == current_user %>
+      <div class="photo-form">
+        <%= simple_form_for(@user) do |f| %>
+          <%= f.input :photo, label: false, class: "form-control" %>
+          <%= f.button :submit, "Update Photo", class: "btn btn-success"  %>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div id="profile-container">
     <div class="row profile-content-container">
       <div class="col-xs-12">
         <div class="box-profile-content">
-          <h3 class="text-center">About <%= @user.first_name %></h3>
+          <h3 class="text-center">
+            About <%= @user.first_name %>
+              <% if @user == current_user %>
+                <i id="edit-bio" class="far fa-edit"></i>
+              <% end %>
+          </h3>
           <%= render 'users/bio', user: @user  %>
           <%= render 'users/form', user: @user  %>
         </div>
@@ -86,21 +104,63 @@
 
   <% if @user == current_user %>
     const bioText = document.getElementById("bio-text");
-    const inputField = document.getElementById("formTarget")
+    const inputField = document.getElementById("formTarget");
+    const editBioIcon = document.getElementById("edit-bio");
+    const cancelBioUpdateButton = document.getElementById("cancel-bio-update");
+    const userAbilityForm = document.getElementById("user-ability-form");
+    const userAbilityText = document.getElementById("user-ability-text");
+    const editAbilityIcon = document.getElementById("edit-ability-icon");
+    const cancelAbilityUpdateButton = document.getElementById("cancel-ability-update-button");
 
-    bioText.addEventListener("click", (event) => {
+    editBioIcon.addEventListener("click", (event) => {
       console.log(event);
-      event.currentTarget.classList.toggle('hidden');
+      bioText.classList.toggle('hidden');
       inputField.classList.toggle('hidden');
+      cancelBioUpdateButton.classList.toggle('hidden');
     });
+
+    // bioText.addEventListener("click", (event) => {
+    //   console.log(event);
+    //   event.currentTarget.classList.toggle('hidden');
+    //   inputField.classList.toggle('hidden');
+    // });
 
     const form = document.getElementById("bio-form");
 
     form.addEventListener("submit", () => {
       bioText.classList.toggle("hidden");
       inputField.classList.toggle("hidden");
+      cancelBioUpdateButton.classList.toggle("hidden");
       console.log("just submitted");
-    })
+    });
+
+    cancelBioUpdateButton.addEventListener("click", (event) => {
+      cancelBioUpdateButton.classList.toggle("hidden");
+      bioText.classList.toggle("hidden");
+      inputField.classList.toggle("hidden");
+    });
+
+    editAbilityIcon.addEventListener("click", (e) => {
+      e.currentTarget.classList.toggle('hidden');
+      userAbilityText.classList.toggle('hidden');
+      userAbilityForm.classList.toggle('hidden');
+      cancelAbilityUpdateButton.classList.toggle('hidden');
+    });
+
+    userAbilityForm.addEventListener("submit", (e) => {
+      userAbilityForm.classList.toggle('hidden');
+      userAbilityText.classList.toggle('hidden');
+      editAbilityIcon.classList.toggle('hidden');
+      cancelAbilityUpdateButton.classList.toggle('hidden');
+    });
+
+    cancelAbilityUpdateButton.addEventListener("click", (e) => {
+      e.currentTarget.classList.toggle('hidden');
+      userAbilityForm.classList.toggle('hidden');
+      userAbilityText.classList.toggle('hidden');
+      editAbilityIcon.classList.toggle('hidden');
+    });
+
   <% end %>
 
 </script>
