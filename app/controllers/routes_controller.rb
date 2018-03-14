@@ -1,22 +1,37 @@
 class RoutesController < ApplicationController
   require 'nokogiri'
-
   skip_before_action :authenticate_user!
   skip_after_action :verify_authorized
   before_action :find_route, only: [:show, :edit, :update]
   def index
-    if params[:query].present?
-      # sql_query = "
-      # routes.name @@ :query \
-      # OR routes.description @@ :query \
-      # "
-      @query = params[:query]
-      search = Route.search_by_route_attributes("%#{params[:query]}%")
+    # if params[:query].present?
+    #   # sql_query = "
+    #   # routes.name @@ :query \
+    #   # OR routes.description @@ :query \
+    #   # "
+    #   @query = params[:query]
+    #   search = Route.search_by_route_attributes("%#{params[:query]}%")
+    #   @routes = policy_scope(search).order(created_at: :desc)
+    #   # .where(sql_query, query: "%#{params[:query]}%")
+    # else
+    #   @routes = policy_scope(Route).order(created_at: :desc)
+    #   # starting_coordinates(@routes)
+    # end
+
+    if params[:search]
+
+      difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : ["Challenging", "Moderate", "Easy", nil]
+      distance_range_array = params[:search]["distance"].present? ? params[:search]["distance"].split('..') : [0,Route.all.collect(&:distance).map(&:to_i).max]
+      ascent_range_array = params[:search]["ascent"].present? ? params[:search]["ascent"].split('..') : [0,Route.all.collect(&:ascent).map(&:to_i).max]
+      duration_range_array = params[:search]["duration"].present? ? params[:search]["duration"].split('..') : [0,Route.all.collect(&:duration).map(&:to_i).max]
+
+      search = Route.where(difficulty: difficulty)
+              .where('distance between ? and ? or distance is null', distance_range_array[0].to_i, distance_range_array[1].to_i)
+              .where('ascent between ? and ? or ascent is null', ascent_range_array[0].to_i, ascent_range_array[1].to_i)
+              .where('duration between ? and ? or duration is null', duration_range_array[0].to_i, duration_range_array[1].to_i)
       @routes = policy_scope(search).order(created_at: :desc)
-      # .where(sql_query, query: "%#{params[:query]}%")
     else
       @routes = policy_scope(Route).order(created_at: :desc)
-      # starting_coordinates(@routes)
     end
   end
 

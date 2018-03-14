@@ -1,7 +1,7 @@
 <div class="map-container">
   <div class='sidebar'>
-    <div class="heading pad2">
-      <h1>Search Routes</h1>
+<!--     <div class="heading pad2"> -->
+<!--       <h1>Search Routes</h1>
       <div id="search-field">
         <%= form_tag routes_path, method: :get do %>
           <%= text_field_tag :query,
@@ -10,13 +10,25 @@
             placeholder: "Find a hike by name or description, difficulty, duration, ascent, distance..."
           %>
         <% end %>
+      </div> -->
+
+      <div id="filter-bar">
+        <%= simple_form_for :search, url: routes_path, method: :get, html: { class: 'form-inline' } do |f| %>
+          <%= f.input :difficulty, collection: ["Challenging", "Moderate", "Easy"], include_blank: "Difficulty", label: false %>
+          <%= f.input :distance, collection: [[0..30, 'Under 30km'], [30..50, '30-50km'], [50..100, '50km-100km'], [100..Route.all.collect(&:distance).map(&:to_i).max, 'Over 100km']], label_method: :second, value_method: :first, include_blank: "Distance", label: false %>
+          <%= f.input :ascent, collection: [[0..100, 'Under 100m'], [100..200, '100-200m'], [200..500, '200-500m'], [500..Route.all.collect(&:distance).map(&:to_i).max, 'Over 500m']], label_method: :second, value_method: :first, include_blank: "Ascent", label: false %>
+          <%= f.input :duration, collection: [[0..10, 'Under 10 hours'], [10..20, '1 to 2 days'], [20..50, '2 to 5 days'], [50..Route.all.collect(&:distance).map(&:to_i).max, 'Over 5 days']], label_method: :second, value_method: :first, include_blank: "Duration", label: false %>
+          <%= submit_tag "Filter", name: nil %>
+        <% end %>
       </div>
-      <% if @query.nil? %>
+
+
+<!--       <% if @query.nil? %>
         <h1 id="query-header" class="text-center"></h1>
       <% else %>
         <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
       <% end %>
-    </div>
+    </div> -->
     <% @routes.each do |route| %>
       <%= link_to route_path(route) do %>
         <div id='listings' class='listings'>
