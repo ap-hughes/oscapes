@@ -40,7 +40,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   padding: 20px;
   box-sizing: border-box;
 }
-.listings {
+.listing {
   display: flex;
   align-items: center;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
@@ -50,7 +50,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   margin: 10px;
 
 }
-.listings:hover, .listings.active {
+.listing:hover, .listing.active {
   .description-box {
     width: 200px;
   }
@@ -119,3 +119,4 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .description-text {
   padding: 20px;
 }
+
