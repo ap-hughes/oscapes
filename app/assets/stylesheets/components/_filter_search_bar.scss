@@ -5,7 +5,11 @@
   background: white;
   width: 100%;
   box-shadow: 0 3px 2px -2px $lightest-green;
-  input {
+  .btn {
+    width: 100px;
+    margin: 10px;
+  }
+  .form-group {
     margin: 10px;
   }
 }
