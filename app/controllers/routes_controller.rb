@@ -19,7 +19,6 @@ class RoutesController < ApplicationController
     # end
 
     if params[:search]
-
       difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : ["Challenging", "Moderate", "Easy", nil]
       distance_range_array = params[:search]["distance"].present? ? params[:search]["distance"].split('..') : [0,Route.all.collect(&:distance).map(&:to_i).max]
       ascent_range_array = params[:search]["ascent"].present? ? params[:search]["ascent"].split('..') : [0,Route.all.collect(&:ascent).map(&:to_i).max]
@@ -33,6 +32,8 @@ class RoutesController < ApplicationController
     else
       @routes = policy_scope(Route).order(created_at: :desc)
     end
+    @difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : "Difficulty"
+    @distance = params[:search]["distance"].present? ? params[:search]["distance"] : "Distance"
   end
 
   def show
