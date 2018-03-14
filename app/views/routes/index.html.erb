@@ -17,48 +17,54 @@
         <h1 id="query-header" class="text-center"><%="Oscaping to: #{@query}"%></h1>
       <% end %>
     </div>
-    <% @routes.each do |route| %>
-      <%= link_to route_path(route) do %>
-        <div id='listings' class='listings'>
-          <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
-          <div class="listing-info">
-            <div class="route-name"><h3><%= route.name %></h3></div>
-            <div class="card-bookmark">
-              <%= link_to route_favourites_path(route), method: :post do %>
-                <i class="fa fa-bookmark"></i>
-              <% end %>
-            </div>
-            <div class="listing-bottom-info">
-              <div class="route-details">
-                <div class="route-attribute">
-                  <p><i class="fas fa-arrows-alt-h"></i>
-                    <%= route.distance %>km</p>
+    <div id="listings" class="listings">
+      <% i = 0 %>
+      <% @routes.each do |route| %>
+        <%= link_to route_path(route) do %>
+          <div id='listing-<%= i %>' class='listing' data-position='<%= i %>'>
+            <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
+            <div class="listing-info">
+              <div class="route-name"><h3><%= route.name %></h3></div>
+              <div class="card-bookmark">
+                <%= link_to route_favourites_path(route), method: :post do %>
+                  <i class="fa fa-bookmark"></i>
+                <% end %>
+              </div>
+              <div class="listing-bottom-info">
+                <div class="route-details">
+                  <div class="route-attribute">
+                    <p><i class="fas fa-arrows-alt-h"></i>
+                      <%= route.distance %>km</p>
+                  </div>
+                  <div class="route-attribute">
+                    <p><i class="fas fa-long-arrow-alt-up"></i> <%= route.ascent %>m</p>
+                  </div>
+                  <div class="route-attribute">
+                    <p><i class="far fa-clock"></i>
+                      <% if route.duration == nil %> hours
+                      <% elsif route.duration > 24 %>
+                        <%= route.duration/12 %> days
+                      <% else %>
+                        <%= route.duration %> hours
+                      </p>
+                      <% end %>
+                  </div>
+                  <div class="route-creator"><p>By <%= route.user.first_name %></p></div>
                 </div>
-                <div class="route-attribute">
-                  <p><i class="fas fa-long-arrow-alt-up"></i> <%= route.ascent %>m</p>
-                </div>
-                <div class="route-attribute">
-                  <p><i class="far fa-clock"></i>
-                    <% if route.duration == nil %> hours
-                    <% elsif route.duration > 24 %>
-                      <%= route.duration/12 %> days
-                    <% else %>
-                      <%= route.duration %> hours
-                    </p>
-                    <% end %>
-                </div>
-                <div class="route-creator"><p>By <%= route.user.first_name %></p></div>
               </div>
             </div>
-          </div>
-          <div class="description-box">
-            <div class="description-text">
-              <p>Here is a little description of the route...</p>
+            <div class="description-box">
+              <div id="description-text-<%= i %>" class="description-text">
+                <p>Here is a little description of the route...</p>
+                <a href="#" class="point-link" data-position="<%= i %>">See on map</a>
+              </div>
+              <% i += 1 %>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
+
   </div>
   <div id='map' class='map pad2'></div>
 </div>
@@ -72,6 +78,10 @@
     center: [-4.07750412, 54.68907436],
     zoom: 5
   });
+
+  // map.on("moveend", (event) => {
+  //   console.log(event);
+  // });
 
   // Navigation controls
   map.addControl(new mapboxgl.NavigationControl());
@@ -117,21 +127,81 @@
   <% end %>
 
   map.on('load', function(e) {
-  // Add the data to your map as a layer
-    map.addLayer({
-      id: 'locations',
-      type: 'symbol',
-      // Add a GeoJSON source containing place coordinates and information.
-      source: {
-        type: 'geojson',
-        data: indexGeojson
-      },
-      layout: {
-        'icon-image': 'restaurant-15',
-        'icon-allow-overlap': true,
-      }
+    map.addSource('routes', {
+      type: 'geojson',
+      data: indexGeojson
     });
   });
 
+  function flyToRoute(currentFeature) {
+    map.flyTo({
+      center: currentFeature.geometry.coordinates,
+      zoom: 15
+    });
+  }
 
+  function createPopUp(currentFeature) {
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    if (popUps[0]) popUps[0].remove();
+
+    var popup = new mapboxgl.Popup({ offset: 25 })
+      .setLngLat(currentFeature.geometry.coordinates)
+      .setHTML('<h3>' + currentFeature.properties.title + '</h3><p>' + currentFeature.properties.description + '</p>')
+      .addTo(map);
+  }
+
+  // this is so it is possible to use .remove() function in older browsers
+  if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function() {
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
+      }
+    };
+  }
+  const pointLinks = document.querySelectorAll('.point-link');
+  pointLinks.forEach((element) => {
+    // Add an event listener for the links in the sidebar listing
+    element.addEventListener('click', function(e) {
+      // Update the currentFeature to the store associated with the clicked link
+      var clickedListing = indexGeojson.features[this.dataset.position];
+      // 1. Fly to the point associated with the clicked link
+      flyToRoute(clickedListing);
+      // 2. Close all other popups and display popup for clicked store
+      createPopUp(clickedListing);
+      // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+      var activeItem = document.getElementsByClassName('active');
+      if (activeItem[0]) {
+        activeItem[0].classList.remove('active');
+      }
+      this.parentNode.classList.add('active');
+      // console.log(this.parentNode);
+    });
+  })
+
+  // Add markers to map
+  indexGeojson.features.forEach(function(marker) {
+    // create a HTML element for each feature
+    var el = document.createElement('i');
+    el.className = 'fas fa-map-marker fa-2x green-marker';
+
+    // make a marker for each poi feature and add to the map
+    new mapboxgl.Marker(el)
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 })
+    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+    .addTo(map);
+
+    el.addEventListener('click', (e) => {
+      flyToRoute(marker);
+      createPopUp(marker);
+      e.stopPropagation();
+      // if (activeItem[0]) {
+      //   activeItem[0].classList.remove('active');
+      // }
+      // var listing = document.getElementById('listing-' + i);
+      // console.log(listing);
+      // listing.classList.add('active');
+    })
+  });
 </script>
