@@ -76,7 +76,7 @@ InterestPoint.create!(title: "Bowness-on-Solway", description: "The end of the t
 
 puts "Creating POI for North Downs Way"
 InterestPoint.create!(title: "Farnham", description: "Town known for its Georgian streets and historic buildings. It is nestled in the Surrey hills.", route: north_downs_way, longitude: -0.7988, latitude: 51.2143)
-InterestPoint.create!(title: "Guildford", description: "Large town in the heart of Surrey, with a striking cathedral famous High Street setts.", route: north_downs_way, longitude: -0.5704, latitude: 51.2362)
+InterestPoint.create!(title: "Guildford", description: "Large town in the heart of Surrey, with a striking cathedral and famous for its High Street setts.", route: north_downs_way, longitude: -0.5704, latitude: 51.2362)
 InterestPoint.create!(title: "Dorking / Westhumble", description: "A charming market town in the Surrey hills, Dorking is a little further South from the trail proper, but you find more accommodation options.", route: north_downs_way, longitude: -0.3324, latitude: 51.2322)
 InterestPoint.create!(title: "Redhill / Merstham", description: "Redhill is a little South of the trail, and adjoins Merstham. While still part of the London commuter belt, it has attractive Victorian buildings and is a suitable stop-off.", route: north_downs_way, longitude: -0.1699, latitude: 51.2392)
 InterestPoint.create!(title: "Tatsfield", description: "Located on the trail, Tatsfield is a village in the Northeastern corner of Surrey.", route: north_downs_way, longitude: 0.0258103, latitude: 51.2918573)
