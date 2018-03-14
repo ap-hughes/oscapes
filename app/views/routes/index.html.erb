@@ -124,44 +124,11 @@
   <% end %>
 
   map.on('load', function(e) {
-  // Add the data to your map as a layer
-    // map.addLayer({
-    //   id: 'locations',
-    //   type: 'symbol',
-    //   // Add a GeoJSON source containing place coordinates and information.
-    //   source: {
-    //     type: 'geojson',
-    //     data: indexGeojson
-    //   },
-    //   layout: {
-    //     'icon-image': 'restaurant-15',
-    //     'icon-allow-overlap': true,
-    //   }
-    // });
     map.addSource('routes', {
       type: 'geojson',
       data: indexGeojson
     });
-    // buildMapLinks(indexGeojson);
   });
-
-  function buildMapLinks(data) {
-  // Iterate through the list of stores
-    for (i = 0; i < data.features.length; i++) {
-      var currentFeature = data.features[i];
-      // Shorten data.feature.properties to just `prop` so we're not
-      // writing this long form over and over again.
-      var prop = currentFeature.properties;
-
-      var descriptionText = document.getElementById(`description-text-${i}`);
-      var pointLink = descriptionText.appendChild(document.createElement('a'));
-      // console.log(pointLink);
-      pointLink.href = '#';
-      pointLink.className = 'point-link';
-      pointLink.dataPosition = i;
-      pointLink.innerHTML = 'See on map';
-    }
-  }
 
   function flyToRoute(currentFeature) {
     map.flyTo({
@@ -209,41 +176,11 @@
     });
   })
 
-  // // Add an event listener for when a user clicks on the map
-  // map.on('click', function(e) {
-  //   // console.log(e);
-  //   // Query all the rendered points in the view
-  //   var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
-  //   if (features.length) {
-  //     var clickedPoint = features[0];
-  //     // 1. Fly to the point
-  //     flyToRoute(clickedPoint);
-  //     // 2. Close all other popups and display popup for clicked store
-  //     createPopUp(clickedPoint);
-  //     // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-  //     var activeItem = document.getElementsByClassName('active');
-  //     if (activeItem[0]) {
-  //       activeItem[0].classList.remove('active');
-  //     }
-  //     // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
-  //     var selectedFeature = clickedPoint.properties.title;
-
-  //     for (var i = 0; i < indexGeojson.features.length; i++) {
-  //       if (indexGeojson.features[i].properties.title === selectedFeature) {
-  //         selectedFeatureIndex = i;
-  //       }
-  //     }
-  //     // Select the correct list item using the found index and add the active class
-  //     var listing = document.getElementById('listing-' + selectedFeatureIndex);
-  //     listing.classList.add('active');
-  //   }
-  // });
-
   // Add markers to map
   indexGeojson.features.forEach(function(marker) {
     // create a HTML element for each feature
     var el = document.createElement('i');
-    el.className = 'fas fa-map-marker fa-2x';
+    el.className = 'fas fa-map-marker fa-2x green-marker';
 
     // make a marker for each poi feature and add to the map
     new mapboxgl.Marker(el)
@@ -256,12 +193,12 @@
       flyToRoute(marker);
       createPopUp(marker);
       e.stopPropagation();
-      if (activeItem[0]) {
-        activeItem[0].classList.remove('active');
-      }
-      var listing = document.getElementById('listing-' + i);
-      console.log(listing);
-      listing.classList.add('active');
-      })
-    });
+      // if (activeItem[0]) {
+      //   activeItem[0].classList.remove('active');
+      // }
+      // var listing = document.getElementById('listing-' + i);
+      // console.log(listing);
+      // listing.classList.add('active');
+    })
+  });
 </script>
