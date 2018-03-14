@@ -64,7 +64,6 @@
         <% end %>
       <% end %>
     </div>
-
   </div>
   <div id='map' class='map pad2'></div>
 </div>
@@ -159,6 +158,7 @@
       }
     };
   }
+
   const pointLinks = document.querySelectorAll('.point-link');
   pointLinks.forEach((element) => {
     // Add an event listener for the links in the sidebar listing
@@ -167,7 +167,7 @@
       var clickedListing = indexGeojson.features[this.dataset.position];
       // 1. Fly to the point associated with the clicked link
       flyToRoute(clickedListing);
-      // 2. Close all other popups and display popup for clicked store
+      // 2. Close all other popups and display popup for clicked route
       createPopUp(clickedListing);
       // 3. Highlight listing in sidebar (and remove highlight for all other listings)
       var activeItem = document.getElementsByClassName('active');
@@ -189,7 +189,7 @@
     new mapboxgl.Marker(el)
     .setLngLat(marker.geometry.coordinates)
     .setPopup(new mapboxgl.Popup({ offset: 25 })
-    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+    .setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>'))
     .addTo(map);
 
     el.addEventListener('click', (e) => {
