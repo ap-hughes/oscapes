@@ -146,4 +146,14 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 .poi-description {
   padding: 0 15px;
+  height: 145px;
+  overflow: hidden;
+}
+.listing-info-hover:hover{
+  background-color: $green;
+  transition: .5s;
+}
+.listing-info-active {
+  background-color: $green;
+  transition: .5s;
 }

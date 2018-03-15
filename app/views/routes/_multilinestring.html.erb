@@ -173,11 +173,11 @@
         // 2. Close all other popups and display popup for clicked route
         createPopUp(clickedListing);
         // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-        var activeItem = document.getElementsByClassName('active');
+        var activeItem = document.getElementsByClassName('listing-info-active');
         if (activeItem[0]) {
-          activeItem[0].classList.remove('active');
+          activeItem[0].classList.remove('listing-info-active');
         }
-        this.parentNode.classList.add('active');
+        this.parentNode.classList.add('listing-info-active');
         // console.log(this.parentNode);
       });
     })

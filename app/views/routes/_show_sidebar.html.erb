@@ -6,9 +6,9 @@
     <% i = 0 %>
     <% @interest_points.each do |interest_point| %>
       <div id='listing-<%= i %>' class='listing' data-position='<%= i %>'>
-        <div class="listing-info">
+        <div class="listing-info point-link listing-info-hover" data-position="<%= i %>">
           <div class="route-name">
-            <h4 class="point-link" data-position="<%= i %>"><%= interest_point.title %></h4>
+            <h4><%= interest_point.title %></h4>
           </div>
           <% i += 1 %>
           <div class="poi-description">
