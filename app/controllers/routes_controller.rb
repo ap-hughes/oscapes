@@ -29,7 +29,7 @@ class RoutesController < ApplicationController
       @duration_range_array = params[:search]["duration"].present? ? params[:search]["duration"].split('..') : [0,Route.all.collect(&:duration).map(&:to_i).max]
 
       search = Route.where(difficulty: @difficulty_array)
-              .where('ascent between ? and ? or distance is null', @distance_range_array[0].to_i, @distance_range_array[1].to_i)
+              .where('distance between ? and ? or distance is null', @distance_range_array[0].to_i, @distance_range_array[1].to_i)
               .where('ascent between ? and ? or ascent is null', @ascent_range_array[0].to_i, @ascent_range_array[1].to_i)
               .where('duration between ? and ? or duration is null', @duration_range_array[0].to_i, @duration_range_array[1].to_i)
       @routes = policy_scope(search).order(created_at: :desc)
