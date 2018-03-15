@@ -19,20 +19,26 @@ class RoutesController < ApplicationController
     # end
 
     if params[:search]
+      @difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : nil
+      @difficulty_array = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : ["Challenging", "Moderate", "Easy", nil]
+      @distance = params[:search]["distance"].present? ? params[:search]["distance"].split('..') : nil
+      @distance_range_array = params[:search]["distance"].present? ? params[:search]["distance"].split('..') : [0,Route.all.collect(&:distance).map(&:to_i).max]
+      @ascent = params[:search]["ascent"].present? ? params[:search]["ascent"].split('..') : nil
+      @ascent_range_array = params[:search]["ascent"].present? ? params[:search]["ascent"].split('..') : [0,Route.all.collect(&:ascent).map(&:to_i).max]
+      @duration = params[:search]["duration"].present? ? params[:search]["duration"].split('..') : nil
+      @duration_range_array = params[:search]["duration"].present? ? params[:search]["duration"].split('..') : [0,Route.all.collect(&:duration).map(&:to_i).max]
 
-      difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : ["Challenging", "Moderate", "Easy", nil]
-      distance_range_array = params[:search]["distance"].present? ? params[:search]["distance"].split('..') : [0,Route.all.collect(&:distance).map(&:to_i).max]
-      ascent_range_array = params[:search]["ascent"].present? ? params[:search]["ascent"].split('..') : [0,Route.all.collect(&:ascent).map(&:to_i).max]
-      duration_range_array = params[:search]["duration"].present? ? params[:search]["duration"].split('..') : [0,Route.all.collect(&:duration).map(&:to_i).max]
-
-      search = Route.where(difficulty: difficulty)
-              .where('distance between ? and ? or distance is null', distance_range_array[0].to_i, distance_range_array[1].to_i)
-              .where('ascent between ? and ? or ascent is null', ascent_range_array[0].to_i, ascent_range_array[1].to_i)
-              .where('duration between ? and ? or duration is null', duration_range_array[0].to_i, duration_range_array[1].to_i)
+      search = Route.where(difficulty: @difficulty_array)
+              .where('ascent between ? and ? or distance is null', @distance_range_array[0].to_i, @distance_range_array[1].to_i)
+              .where('ascent between ? and ? or ascent is null', @ascent_range_array[0].to_i, @ascent_range_array[1].to_i)
+              .where('duration between ? and ? or duration is null', @duration_range_array[0].to_i, @duration_range_array[1].to_i)
       @routes = policy_scope(search).order(created_at: :desc)
+
     else
       @routes = policy_scope(Route).order(created_at: :desc)
     end
+    # @difficulty = params[:search]["difficulty"].present? ? params[:search]["difficulty"] : "Difficulty"
+    # @distance = params[:search]["distance"].present? ? params[:search]["distance"] : "Distance"
   end
 
   def show
