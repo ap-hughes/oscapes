@@ -23,19 +23,21 @@
       <div class="key-details">
         <p class="difficulty"><%= @route.difficulty %> route</p>
 
-      <% if @average_rating %>
         <div class="ratings-block">
           <%= link_to "#reviews" do %>
-            <% @average_rating.to_i.times do %>
-              <i class="fas fa-star"></i>
-            <% end %>
-            <% (5 - @average_rating.to_i).times do %>
-              <i class="far fa-star"></i>
-            <% end %>
+            <% if @average_rating == nil %>
+              <p>No reviews yet</p>
+            <% else %>
+              <% @average_rating.to_i.times do %>
+                <i class="fas fa-star"></i>
+              <% end %>
+              <% (5 - @average_rating.to_i).times do %>
+                <i class="far fa-star"></i>
+              <% end %>
             (<%= pluralize @route.reviews.size, "Review" %>)
+            <% end %>
           <% end %>
         </div>
-      <% end %>
 
         <div class="route-info-item">
           <%= image_tag "distance.svg" %>
@@ -101,18 +103,20 @@
   <% end %>
 
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-        <div class="review-form">
-          <% if @route.reviews.blank?  %>
-            <h3> id="review-cta">Be the first reviewer for <%= @route.name %>!</h3>
-          <% else %>
-            <h3>Write a review for <%= @route.name %></h3>
-          <% end %>
-          <%= render 'reviews/form',route: @route, review: @review %>
+    <% if current_user %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+          <div class="review-form">
+            <% if @route.reviews.blank?  %>
+              <h3> Be the first reviewer for <%= @route.name %>!</h3>
+            <% else %>
+              <h3>Write a review for <%= @route.name %></h3>
+            <% end %>
+            <%= render 'reviews/form',route: @route, review: @review %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="review-form">
