@@ -15,12 +15,25 @@
 <% end %>
       <div id="filter-bar">
         <%= simple_form_for :search, url: routes_path, method: :get, html: { class: 'form-inline' } do |f| %>
-          <%= f.input :difficulty, collection: ["Challenging", "Moderate", "Easy"], include_blank: "#{@difficulty}", label: false, id: 'difficulty' %>
-          <%= f.input :distance, collection: [[0..30, 'Under 30km'], [30..50, '30-50km'], [50..100, '50km-100km'], [100..Route.all.collect(&:distance).map(&:to_i).max, 'Over 100km']], label_method: :second, value_method: :first, include_blank: "#{@distance}", label: false, id: 'distance' %>
+          <%= f.input :difficulty, collection: ["Challenging", "Moderate", "Easy"], include_blank: "Difficulty", label: false, id: 'difficulty' %>
+          <%= f.input :distance, collection: [[0..30, 'Under 30km'], [30..50, '30-50km'], [50..100, '50km-100km'], [100..Route.all.collect(&:distance).map(&:to_i).max, 'Over 100km']], label_method: :second, value_method: :first, include_blank: "Distance", label: false, id: 'distance' %>
           <%= f.input :ascent, collection: [[0..100, 'Under 100m'], [100..200, '100-200m'], [200..500, '200-500m'], [500..Route.all.collect(&:ascent).map(&:to_i).max, 'Over 500m']], label_method: :second, value_method: :first, include_blank: "Ascent", label: false, id: 'ascent' %>
           <%= f.input :duration, collection: [[0..10, 'Under 10 hours'], [10..20, '1 to 2 days'], [20..50, '2 to 5 days'], [50..Route.all.collect(&:duration).map(&:to_i).max, 'Over 5 days']], label_method: :second, value_method: :first, include_blank: "Duration", label: false, id: 'duration' %>
           <%= f.button :submit, "Filter", name: nil, class: "btn btn-warning" %>
         <% end %>
+        <div class="filter-info">
+          <% if params[:search].present? %>
+            <p>Filtered by: </p>
+            <p><%= "Difficulty - #{@difficulty}" if @difficulty.present? %> </p>
+            <p><%= "Distance - #{@distance[0]} to #{@distance[1]} km" if @distance.present? %> </p>
+            <p><%= "Ascent - #{@ascent[0]} to #{@ascent[1]} m" if @ascent.present? %></p>
+            <p><%= "Duration - #{@duration[0].to_i/10} to #{@duration[1].to_i/10} days" if @duration.present? %></p>
+            <%= link_to routes_path do %>
+              <i class="fas fa-times"></i>
+            <% end %>
+          <% end %>
+        </div>
+
       </div>
 
 
