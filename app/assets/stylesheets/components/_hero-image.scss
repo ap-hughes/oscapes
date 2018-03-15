@@ -7,13 +7,10 @@
 
 .hero-content {
   padding-top: 10vh;
-  display: flex;
-  align-items: center;
   h1 {
-    margin: 0;
+    margin: 0 0 20px 0;
     color: white;
     text-shadow: 1px 1px 20px rgba(0,0,0,0.5);
-    display: inline;
   }
 
   a {
@@ -27,7 +24,6 @@
 
 .save-button {
   display: inline;
-  margin-left: 20px;
   padding: 8px 16px;
   background: $light-gray;
   width: 60px;
