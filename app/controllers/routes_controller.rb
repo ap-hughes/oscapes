@@ -134,7 +134,12 @@ class RoutesController < ApplicationController
   def download_gpx
     @route = Route.find(params[:route_id])
     authorize @route
-    write_gpx(@route)
+    if user_signed_in?
+      write_gpx(@route)
+    else
+      flash[:alert] = "You need to sign-in to download a gpx"
+      redirect_to route_path(@route)
+    end
   end
 
   def set_ascent_and_distance
