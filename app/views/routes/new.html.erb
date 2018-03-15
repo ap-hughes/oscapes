@@ -1,9 +1,28 @@
-<div class="container full-height">
+<div class="container full-height" id="new">
   <p></p>
   <%= simple_form_for @route, remote: true do |f| %>
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.file_field :upload %>
-    <%= f.submit %>
+    <%= f.submit id: "Create" %>
   <% end %>
 </div>
+
+<div id="sk-folding-cube">
+  <div class="sk-cube1 sk-cube"></div>
+  <div class="sk-cube2 sk-cube"></div>
+  <div class="sk-cube4 sk-cube"></div>
+  <div class="sk-cube3 sk-cube"></div>
+</div>
+
+<script>
+  // window.onload = function() {
+  //  document.getElementById("sk-folding-cube").hidden = true;
+  // };
+
+  // document.getElementById("Create")document.addEventListener("click", function() {
+  //   document.getElementById("sk-folding-cube").hidden = true;
+  //   document.getElementById("sk-folding-cube").hidden = false;
+  // });
+
+</script>

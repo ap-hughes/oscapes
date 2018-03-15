@@ -53,7 +53,7 @@
       ascent: ascent,
     }
 
-    let token = document.getElementsByTagName('meta')[3].content
+    let token = document.getElementsByTagName('meta')["csrf-token"].content
 
     fetch('/routes/<%= @route.id %>/set_ascent_and_distance', {
       method: 'PUT',
