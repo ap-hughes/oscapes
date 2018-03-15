@@ -1,0 +1,8 @@
+<div class="ability-text-container">
+  <h5 id="user-ability-text">
+    <%= user.ability %>
+  </h5>
+  <% if user == current_user %>
+    <i id="edit-ability-icon" class="far fa-edit"></i>
+  <% end %>
+</div>

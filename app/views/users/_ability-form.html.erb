@@ -1,0 +1,11 @@
+<div id="user-ability-form" >
+  <%= simple_form_for user, remote: true do |f| %>
+    <div id="ability-target" class="hidden">
+      <%= f.input :ability, label: false, class: "form-control" %>
+      <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
+      <i id="cancel-ability-update-button" class="far fa-times-circle fa-lg edit-button"></i>
+    </div>
+  <% end %>
+</div>
+
+

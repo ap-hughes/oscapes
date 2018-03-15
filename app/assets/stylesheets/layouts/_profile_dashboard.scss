@@ -1,39 +1,107 @@
-.box-profile-header {
-  margin: 20px;
-  // text-align: center;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
+.flexbox-container {
+  display: flex;
 }
 
-div.user_ability {
+#profile-sidebar {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 400px;
+  height: calc(100vh - 70px) ;
+  position: sticky !important;
+  top: 70px !important;
 }
-#user_ability {
-  text-align: center;
-  width: 150px;
+
+#profile-container {
+  padding: 20px;
 }
+
+#bio-form {
+  width: calc(100vw - 500px);
+}
+
 .box-profile-content {
   padding: 20px;
   box-shadow: 0px 0px 3px 0px #6FCF97;
   border-radius: 5px;
+  background-color: white;
 }
 
-#bio-text {
-  &:hover {
-    box-shadow: 0px 0px 3px 0px #6FCF97;
-  }
+.review-box:last-child {
+  border-bottom: none;
+  margin-bottom: 0px;
 }
+
+.profile-content-container {
+  margin-bottom: 30px;
+}
+
 .review-box {
-  // border-radius: 5px;
-  // box-shadow: 0px 0px 3px 0px #6FCF97;
-  padding: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #6FCF97;
-  // width: 60%;
-  // position: relative;
+  position: relative;
+
+  a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
+
+.avatar-container {
+  position: relative;
+  #edit-profile-pic {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+  }
+}
+
+.edit-button {
+  margin-left: 20px;
+}
+// #bio-text:hover {
+//   box-shadow: 0px 0px 3px 0px #6FCF97;
+// }
+
+.ability-text-container {
+  display: flex;
+  align-items: center;
+  #user-ability-text {
+    margin-right: 10px;
+  }
+}
+
+@media(max-width: 750px) {
+  .flexbox-container {
+    flex-direction: column;
+  }
+  #profile-sidebar {
+    position: absolute;
+    top: 0;
+  }
+}
+
+
+
+// .box-profile-header {
+//   margin: 20px;
+//   // text-align: center;
+//   // display: flex;
+//   // flex-direction: column;
+//   // justify-content: center;
+// }
+
+// div.user_ability {
+//   display: flex;
+//   justify-content: center;
+// }
+// #user_ability {
+//   text-align: center;
+//   width: 150px;
+// }
 
 // .review-link {
 //   position: absolute;
@@ -47,21 +115,17 @@ div.user_ability {
 //   }
 // }
 
-div.user_photo {
-  display: flex;
-  justify-content: center;
-}
-#user_photo {
-  text-align: center;
-}
+// div.user_photo {
+//   display: flex;
+//   justify-content: center;
+// }
+// #user_photo {
+//   text-align: center;
+// }
 
-.users-reviews-container {
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-}
-
-.profile-content-container {
-  margin-bottom: 30px;
-}
+// .users-reviews-container {
+//   display: flex;
+//   flex-direction: column;
+//   // justify-content: center;
+//   // align-items: center;
+// }

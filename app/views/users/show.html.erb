@@ -1,54 +1,68 @@
-<div class="wrapper">
-  <div class="container">
-    <div class="box-profile-header text-center">
+<div class="flexbox-container">
+  <div id="profile-sidebar">
+    <div class="avatar-container">
       <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
       <% if @user == current_user %>
-        <div class="photo-form">
-          <%= simple_form_for(@user) do |f| %>
-            <%= f.input :photo, label: false, class: "form-control" %>
-            <%= f.button :submit, "Update Photo", class: "btn btn-success"  %>
-          <% end %>
-        </div>
+        <i id="edit-profile-pic" class="far fa-edit"></i>
       <% end %>
-      <h2><%= @user.first_name %> <%= @user.last_name %></h2>
-      <h4><%= @user.community_level %> | <%= @user.ability %></h4>
-        <% if @user == current_user %>
-
-            <%= simple_form_for(@user) do |f| %>
-              <%= f.input :ability, label: false, class: "form-control" %>
-              <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
-            <% end %>
-
-        <% end %>
     </div>
+    <h2><%= @user.first_name %> <%= @user.last_name %></h2>
+    <h5><%= @user.community_level %></h5>
+    <%= render 'users/ability_text', user: @user %>
+    <% if @user == current_user %>
+      <%= render 'users/ability-form', user:@user %>
+    <% end %>
+    <% if @user == current_user %>
+      <div class="photo-form">
+        <%= simple_form_for(@user) do |f| %>
+          <%= f.input :photo, label: false, class: "form-control" %>
+          <%= f.button :submit, "Update Photo", class: "btn btn-success"  %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div id="profile-container">
     <div class="row profile-content-container">
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-xs-12">
         <div class="box-profile-content">
-          <h3 class="text-center">About Me</h3>
+          <h3 class="text-center">
+            About <%= @user.first_name %>
+              <% if @user == current_user %>
+                <i id="edit-bio" class="far fa-edit"></i>
+              <% end %>
+          </h3>
           <%= render 'users/bio', user: @user  %>
           <%= render 'users/form', user: @user  %>
         </div>
       </div>
-       <div class="col-xs-12 col-sm-6">
+    </div>
+    <div class="row profile-content-container">
+      <div class="col-xs-12">
         <div class="box-profile-content">
-          <% faves = ["Cotswold Way", "Snowdonia", "Lake District", "Hadrians Wall"] %>
-          <h3 class="text-center">My Favourite Hikes</h3>
+          <h3 class="text-center"><%= @user.first_name %>'s Created Routes</h3>
+          <% if @user.routes.any? %>
             <ul>
-              <% faves.each do |fave| %>
-                <li><%= fave %></li>
+              <% @user.routes.each do |route| %>
+              <li><%= route.name %></li>
               <% end %>
             </ul>
+          <% else %>
+            <% if @user == current_user %>
+              <p>You havent created any routes yet</p>
+            <% else %>
+              <p><%= @user.first_name %> has not created any routes yet.</p>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row profile-content-container">
       <div class="col-xs-12">
-        <% if @user.reviews.any? %>
-          <div class="users-reviews-container">
-            <h3><%= @user.first_name %>'s Reviews</h3>
-            <% reviews = @user.reviews.reverse %>
+        <div class="box-profile-content reviews">
+          <h3 class="text-center"><%= @user.first_name %>'s Reviews</h3>
+          <% reviews = @user.reviews.reverse %>
+          <% if @user.reviews.any? %>
             <% reviews.each do |review| %>
-            <%= link_to route_path(review.route) do %>
               <div class="review-box">
                 <h4> <%= review.route.name %> |
                   <% review.rating.times do %>
@@ -58,40 +72,22 @@
                     <i class="far fa-star"></i>
                   <% end %>
                 </h4>
-                  <p><%= review.content %></p>
+                <p><%= review.content %></p>
+                <%= link_to "", route_path(review.route) %>
               </div>
-              <% end %>
             <% end %>
-          </div>
-      <% end %>
+          <% else %>
+            <% if @user == current_user %>
+              <p>No reviews yet. Review hikes you've been on! :)</p>
+            <% else %>
+              <p><%= @user.first_name %> has not reviewed any routes yet.</p>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
-
-<script>
-
-  <% if @user == current_user %>
-    const bioText = document.getElementById("bio-text");
-    const inputField = document.getElementById("formTarget")
-
-    bioText.addEventListener("click", (event) => {
-      console.log(event);
-      event.currentTarget.classList.toggle('hidden');
-      inputField.classList.toggle('hidden');
-    });
-
-    const form = document.getElementById("bio-form");
-
-    form.addEventListener("submit", () => {
-      bioText.classList.toggle("hidden");
-      inputField.classList.toggle("hidden");
-      console.log("just submitted");
-    })
-  <% end %>
-
-</script>
+<%= javascript_pack_tag 'user_profile_page_forms' %>
 
