@@ -5,6 +5,7 @@ function addReview(reviewHTML) {
 
 function updateReviewsCount() {
   let count = parseInt(document.getElementById('review-count').innerText, 10);
+  console.log(count);
   let word = '';
   if (count === 0) {
     word += 'Review';

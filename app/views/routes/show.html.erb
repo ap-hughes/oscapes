@@ -131,7 +131,7 @@
             <% end %>
             </h3>
           </div>
-          <p>(<%= pluralize @route.reviews.size, "Review" %>)</p>
+          <p><span id="review-count"><%= pluralize @route.reviews.size, "Review" %></span></p>
           <div id="reviews">
             <% reviews = @route.reviews.reverse %>
             <% reviews.each do |review| %>
