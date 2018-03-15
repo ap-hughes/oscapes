@@ -4,10 +4,10 @@
     <%= review.user.first_name  %>
     <% end %> |
     <% review.rating.times do %>
-      <i class="fas fa-star"></i>
+      <i class="fas fa-star stars"></i>
       <% end %>
       <% (5-review.rating).times do %>
-      <i class="far fa-star"></i>
+      <i class="far fa-star stars"></i>
       <% end %>
     </h4>
     <p><%= review.content %></p>
