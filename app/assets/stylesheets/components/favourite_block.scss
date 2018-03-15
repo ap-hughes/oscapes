@@ -1,40 +1,57 @@
+.bookmark-header {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  h2 {
+    font-size: 32px;
+    margin: 0;
+  }
+}
+
 .favourite-block {
   display: flex;
   width: 100%;
-  padding: 20px;
   background: white;
   justify-content: space-between;
+  padding: 0 20px 0 0;
   img {
     width: 300px;
     height: 300px;
   }
-  margin: 60px 0px;
-  border: 1px solid $gray;
+  margin: 0 0 20px 0px;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 
-.route-details {
-  // flex: 1 0 auto;
-  padding: 0 20px;
+.favourite-route-details {
+  flex: 1 0 300px;
+  padding: 0 20px 20px 20px;
+  height: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   h3 {
-    margin: 0;
+    font-size: 25px;
   }
   p {
     margin-top: 20px;
+    width: 100%;
   }
 }
 
 .route-end-block {
   flex: 0 0 200px;
+  padding: 20px;
   position: relative;
   .btn {
     position: absolute;
-    bottom: 0;
+    bottom: 20px;
+    right: 0;
     text-align: center;
     width: 100%;
+    box-sizing: border-box;
   }
 }
 
-.rating {
+.ratings-block {
   text-align: center;
 }
 
