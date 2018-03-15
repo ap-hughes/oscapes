@@ -55,13 +55,20 @@
       addToPoiGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
     <% end %>
 
+    // Set max bounds of map to the whole of UK
+    var bounds = [
+        [-11.023648, 48.675969], // Southwest coordinates
+        [2.599399, 61.280440]  // Northeast coordinates
+    ];
+
     // Loading the map
     mapboxgl.accessToken = 'pk.eyJ1IjoiYXBodWdoZXMiLCJhIjoiY2l6ZHgzaDdqMDA1MzJxa3lqeWF1MG55NSJ9.AhGg6Tqppzg2eurwaNl75w';
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v10',
       center: <%= @center %>,
-      zoom: 10
+      zoom: 10,
+      maxBounds: bounds // Sets bounds as max
     });
 
     // Navigation controls
