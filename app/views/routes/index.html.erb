@@ -60,14 +60,15 @@
               <div class="listing-bottom-info">
                 <div class="route-details">
                   <div class="route-attribute">
-                    <p><i class="fas fa-arrows-alt-h"></i>
-                      <%= route.distance %>km</p>
+                    <%= image_tag "distance.svg" %>
+                    <%= route.distance %> km
                   </div>
                   <div class="route-attribute">
-                    <p><i class="fas fa-long-arrow-alt-up"></i> <%= route.ascent %>m</p>
+                    <%= image_tag "ascent.svg" %>
+                    <%= route.ascent %> m
                   </div>
                   <div class="route-attribute">
-                    <p><i class="far fa-clock"></i>
+                    <%= image_tag "duration.svg" %>
                       <% if route.duration == nil %> hours
                       <% elsif route.duration > 24 %>
                         <%= route.duration/10 %> days
@@ -162,7 +163,7 @@
   function flyToRoute(currentFeature) {
     map.flyTo({
       center: currentFeature.geometry.coordinates,
-      zoom: 15
+      zoom: 10
     });
   }
 

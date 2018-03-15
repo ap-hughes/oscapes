@@ -74,6 +74,9 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   position: absolute;
   top: 20px;
   right: 20px;
+  a {
+    color: $green;
+  }
 }
 .route-details {
   display: flex;
@@ -86,10 +89,29 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 .route-name {
   padding-left: 15px;
+  h3 {
+    color: $green;
+  }
+  a {
+    color: $green;
+  }
 }
 .route-attribute {
   padding: 10px;
   display: flex;
+  p {
+    font-size: 18px;
+    font-weight: lighter;
+    margin: 0 auto;
+    display: inline;
+    line-height: 0;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    display: inline;
+    margin-right: 10px;
+  }
 }
 .route-creator {
   margin-left: 100px;
@@ -114,7 +136,11 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   overflow: hidden;
   transition: .5s;
   background-color: $green;
-  color: white
+  color: white;
+  a {
+    color: white;
+    font-weight: bold;
+  }
 }
 .description-text {
   padding: 20px;
