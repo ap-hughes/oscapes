@@ -140,10 +140,10 @@ class RoutesController < ApplicationController
   def set_ascent_and_distance
     @route = Route.find(params[:id])
     @route.update(route_params)
-    duration = @route.distance / 5 + (@route.ascent / 330) * 0.5
-    if duration > 20 && @route.ascent > 2000
+    duration = (@route.distance / 5) + ((@route.ascent / 330) * 0.5)
+    if duration > 10 && @route.ascent > 700
       difficulty = "Challenging"
-    elsif duration >20 && @route.ascent >1000
+    elsif duration > 5 && @route.ascent > 300
       difficulty = "Moderate"
     else
       difficulty = "Easy"
