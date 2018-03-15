@@ -69,6 +69,8 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   bottom: 10px;
   left: 0;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .card-bookmark {
   position: absolute;
@@ -84,7 +86,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   // position: absolute;
   // bottom: 5px;
   // left: 200px;
-  width: 4  00px;
+  // width: 00px;
   justify-content: space-between;
 }
 .route-name {
@@ -114,10 +116,16 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   }
 }
 .route-creator {
-  margin-left: 100px;
-  // position: absolute;
-  // bottom: 17.5px;
-  // right: 30px;
+  display: flex;
+  margin-bottom: 0px;
+  text-align: right;
+  padding-right: 20px;
+  align-items: center;
+    p {
+    font-size: 18px;
+    font-weight: lighter;
+
+  }
 }
 .square-image {
   height: 200px;
@@ -125,7 +133,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   background-size: cover !important;
   background-position: center;
   margin-right: 10px;
-  transition: .6s;
+  transition: .5s;
 }
 .description-box {
   height: 200px;
@@ -147,7 +155,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 
 .description-box.active {
-  width:200px;
+  width: 200px;
 }
 
 .green-marker {
