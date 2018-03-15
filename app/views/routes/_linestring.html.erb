@@ -51,7 +51,7 @@
     longitude = <%= interest_point.longitude %>
     latitude = <%= interest_point.latitude %>
     title = "<%= interest_point.title %>"
-    description = "<%= interest_point.description %>"
+    description = "<%= interest_point.description.truncate(200, separator: /\s/) %>"
     addToPoiGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
   <% end %>
 

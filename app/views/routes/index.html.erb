@@ -82,7 +82,7 @@
             </div>
             <div class="description-box">
               <div id="description-text-<%= i %>" class="description-text">
-                <p>Here is a little description of the route...</p>
+                <p><%= route.description.truncate(70, separator: /\s/) %></p>
                 <a href="#" class="point-link" data-position="<%= i %>">See on map</a>
               </div>
               <% i += 1 %>
@@ -148,7 +148,7 @@
     longitude = <%= route.start_longitude %>
     latitude = <%= route.start_latitude %>
     title = "<%= route.name %>"
-    description = "<%= route.description %>"
+    description = "<%= route.description.truncate(90, separator: /\s/) %>"
     addToGeoJson(createGeoJsonFeature(longitude, latitude, title, description));
   <% end %>
 
@@ -231,6 +231,12 @@
       // listing.classList.add('active');
     })
   });
+
+  // Shorten a string to less than maxLen characters without truncating words.
+  function shorten(str, maxLen, separator = ' ') {
+    if (str.length <= maxLen) return str;
+    return str.substr(0, str.lastIndexOf(separator, maxLen));
+  };
 
 
 </script>
