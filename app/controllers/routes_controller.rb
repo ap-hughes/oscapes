@@ -280,10 +280,10 @@ class RoutesController < ApplicationController
       # end
     coordinates = coordinates_from(route.coordinates)
     {
-      start_latitude: coordinates.first.first,
-      start_longitude: coordinates.first.last,
-      end_latitude: coordinates.last.first,
-      end_longitude: coordinates.last.last
+      start_latitude: coordinates.first.last,
+      start_longitude: coordinates.first.first,
+      end_latitude: coordinates.last.last,
+      end_longitude: coordinates.last.first
     }
   end
 
