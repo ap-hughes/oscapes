@@ -181,7 +181,10 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .poi-description {
   padding: 0 15px;
   height: 145px;
-  overflow: hidden;
+  // overflow: hidden;
+  p {
+    margin: 0;
+  }
 }
 .listing-info-hover:hover{
   background-color: $green;
@@ -190,4 +193,23 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .listing-info-active {
   background-color: $green;
   transition: .5s;
+}
+
+.listing-info-show {
+  position: relative;
+  height: 100%;
+}
+
+.listing-poi {
+  display: flex;
+  // flex-direction: column;
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
+  background-color: white;
+  min-height: 200px;
+  // position: relative;
+  margin: 10px;
+}
+
+.point-link.listing-info-hover {
+  padding-bottom: 20px;
 }
