@@ -118,7 +118,7 @@
     poiGeojson.features.forEach(function(marker) {
       // create a HTML element for each feature
       var el = document.createElement('i');
-      el.className = 'fas fa-flag fa-2x';
+      el.className = 'fas fa-flag fa-2x flag-colour';
 
       // make a marker for each poi feature and add to the map
       new mapboxgl.Marker(el)
@@ -175,6 +175,7 @@
       element.addEventListener('click', function(e) {
         // Update the currentFeature to the store associated with the clicked link
         var clickedListing = poiGeojson.features[this.dataset.position];
+        console.log(this);
         // 1. Fly to the point associated with the clicked link
         flyToRoute(clickedListing);
         // 2. Close all other popups and display popup for clicked route
@@ -184,7 +185,7 @@
         if (activeItem[0]) {
           activeItem[0].classList.remove('listing-info-active');
         }
-        this.parentNode.classList.add('listing-info-active');
+        this.classList.add('listing-info-active');
         // console.log(this.parentNode);
       });
     })
