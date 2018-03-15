@@ -8,20 +8,9 @@
     </div>
     <h2><%= @user.first_name %> <%= @user.last_name %></h2>
     <h5><%= @user.community_level %></h5>
-    <h5 id="user-ability-text">
-      <%= @user.ability %>
-      <% if @user == current_user %>
-        <i id="edit-ability-icon" class="far fa-edit"></i>
-      <% end %>
-    </h5>
+    <%= render 'users/ability_text', user: @user %>
     <% if @user == current_user %>
-      <div id="user-ability-form" class="hidden">
-        <%= simple_form_for(@user) do |f| %>
-          <%= f.input :ability, label: false, class: "form-control" %>
-          <%= f.button :submit, "Update Ability", class: "btn btn-success"  %>
-          <i id="cancel-ability-update-button" class="far fa-times-circle fa-lg edit-button hidden"></i>
-        <% end %>
-      </div>
+      <%= render 'users/ability-form', user:@user %>
     <% end %>
     <% if @user == current_user %>
       <div class="photo-form">
@@ -100,68 +89,5 @@
   </div>
 </div>
 
-<script>
-
-  <% if @user == current_user %>
-    const bioText = document.getElementById("bio-text");
-    const inputField = document.getElementById("formTarget");
-    const editBioIcon = document.getElementById("edit-bio");
-    const cancelBioUpdateButton = document.getElementById("cancel-bio-update");
-    const userAbilityForm = document.getElementById("user-ability-form");
-    const userAbilityText = document.getElementById("user-ability-text");
-    const editAbilityIcon = document.getElementById("edit-ability-icon");
-    const cancelAbilityUpdateButton = document.getElementById("cancel-ability-update-button");
-
-    editBioIcon.addEventListener("click", (event) => {
-      console.log(event);
-      bioText.classList.toggle('hidden');
-      inputField.classList.toggle('hidden');
-      cancelBioUpdateButton.classList.toggle('hidden');
-    });
-
-    // bioText.addEventListener("click", (event) => {
-    //   console.log(event);
-    //   event.currentTarget.classList.toggle('hidden');
-    //   inputField.classList.toggle('hidden');
-    // });
-
-    const form = document.getElementById("bio-form");
-
-    form.addEventListener("submit", () => {
-      bioText.classList.toggle("hidden");
-      inputField.classList.toggle("hidden");
-      cancelBioUpdateButton.classList.toggle("hidden");
-      console.log("just submitted");
-    });
-
-    cancelBioUpdateButton.addEventListener("click", (event) => {
-      cancelBioUpdateButton.classList.toggle("hidden");
-      bioText.classList.toggle("hidden");
-      inputField.classList.toggle("hidden");
-    });
-
-    editAbilityIcon.addEventListener("click", (e) => {
-      e.currentTarget.classList.toggle('hidden');
-      userAbilityText.classList.toggle('hidden');
-      userAbilityForm.classList.toggle('hidden');
-      cancelAbilityUpdateButton.classList.toggle('hidden');
-    });
-
-    userAbilityForm.addEventListener("submit", (e) => {
-      userAbilityForm.classList.toggle('hidden');
-      userAbilityText.classList.toggle('hidden');
-      editAbilityIcon.classList.toggle('hidden');
-      cancelAbilityUpdateButton.classList.toggle('hidden');
-    });
-
-    cancelAbilityUpdateButton.addEventListener("click", (e) => {
-      e.currentTarget.classList.toggle('hidden');
-      userAbilityForm.classList.toggle('hidden');
-      userAbilityText.classList.toggle('hidden');
-      editAbilityIcon.classList.toggle('hidden');
-    });
-
-  <% end %>
-
-</script>
+<%= javascript_pack_tag 'user_profile_page_forms' %>
 

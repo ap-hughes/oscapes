@@ -66,6 +66,14 @@
 //   box-shadow: 0px 0px 3px 0px #6FCF97;
 // }
 
+.ability-text-container {
+  display: flex;
+  align-items: center;
+  #user-ability-text {
+    margin-right: 10px;
+  }
+}
+
 @media(max-width: 750px) {
   .flexbox-container {
     flex-direction: column;
