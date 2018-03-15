@@ -51,7 +51,7 @@
           <div id='listing-<%= i %>' class='listing' data-position='<%= i %>'>
             <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
             <div class="listing-info">
-              <div class="route-name"><h3><%= route.name %></h3></div>
+              <div class="route-name"><h4><%= route.name %></h4></div>
               <div class="card-bookmark">
                 <%= link_to route_favourites_path(route), method: :post do %>
                   <i class="fa fa-bookmark"></i>
@@ -183,7 +183,7 @@
 
     var popup = new mapboxgl.Popup({ offset: 25 })
       .setLngLat(currentFeature.geometry.coordinates)
-      .setHTML('<h3>' + currentFeature.properties.title + '</h3><p>' + currentFeature.properties.description + '</p>')
+      .setHTML('<h5>' + currentFeature.properties.title + '</h5><p>' + currentFeature.properties.description + '</p>')
       .addTo(map);
   }
 
@@ -212,7 +212,7 @@
         activeItem[0].classList.remove('active');
       }
       this.parentNode.classList.add('active');
-      // console.log(this.parentNode);
+      console.log(this.parentNode);
     });
   })
 

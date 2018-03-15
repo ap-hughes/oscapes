@@ -91,7 +91,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 .route-name {
   padding-left: 15px;
-  h3 {
+  h4 {
     color: $green;
   }
   a {
@@ -138,9 +138,6 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .description-box {
   height: 200px;
   width: 0px;
-  // background-color: red;
-  // position: absolute;
-  // right: 0px;
   overflow: hidden;
   transition: .5s;
   background-color: $green;
@@ -160,6 +157,10 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 
 .green-marker {
   color: $green;
+}
+
+.flag-colour {
+  color: $orange;
 }
 
 .show-sidebar {
