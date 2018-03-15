@@ -1,8 +1,17 @@
+#spinning-cube {
+  padding: 30vh;
+  p {
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
 #sk-folding-cube {
   margin: 20px auto;
   width: 40px;
   height: 40px;
   position: relative;
+  color: $green;
   -webkit-transform: rotateZ(45deg);
           transform: rotateZ(45deg);
 }
@@ -23,7 +32,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #333;
+  background-color: $green;
   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
           animation: sk-foldCubeAngle 2.4s infinite linear both;
   -webkit-transform-origin: 100% 100%;

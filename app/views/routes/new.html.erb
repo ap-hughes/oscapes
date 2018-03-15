@@ -4,25 +4,29 @@
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.file_field :upload %>
-    <%= f.submit id: "Create" %>
+    <%= f.button :submit, id: "Create" %>
   <% end %>
 </div>
 
-<div id="sk-folding-cube">
-  <div class="sk-cube1 sk-cube"></div>
-  <div class="sk-cube2 sk-cube"></div>
-  <div class="sk-cube4 sk-cube"></div>
-  <div class="sk-cube3 sk-cube"></div>
+<div class="container full-height" id="spinning-cube">
+  <div id="sk-folding-cube">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+  </div>
+  <p>Creating your route...</p>
 </div>
 
 <script>
-  // window.onload = function() {
-  //  document.getElementById("sk-folding-cube").hidden = true;
-  // };
-
-  // document.getElementById("Create")document.addEventListener("click", function() {
-  //   document.getElementById("sk-folding-cube").hidden = true;
-  //   document.getElementById("sk-folding-cube").hidden = false;
-  // });
-
+  window.onload = function() {
+   document.getElementById("spinning-cube").hidden = true;
+   console.log("hi");
+  };
+  create = document.getElementById("Create");
+  console.log(create);
+  create.addEventListener("click", function() {
+    document.getElementById("new").hidden = true;
+    document.getElementById("spinning-cube").hidden = false;
+  });
 </script>
