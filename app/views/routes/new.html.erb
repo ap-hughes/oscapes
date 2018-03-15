@@ -1,11 +1,14 @@
 <div class="container full-height" id="new">
   <p></p>
+  <div id="route-form">
   <%= simple_form_for @route, remote: true do |f| %>
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.file_field :upload %>
+  <%= f.error_notification %>
+    <%= f.input :name, required: true %>
+    <%= f.input :description, required: true %>
+    <%= f.file_field :upload, required: true %>
     <%= f.button :submit, id: "Create" %>
   <% end %>
+  </div>
 </div>
 
 <div class="container full-height" id="spinning-cube">
@@ -23,9 +26,9 @@
    document.getElementById("spinning-cube").hidden = true;
    console.log("hi");
   };
-  create = document.getElementById("Create");
+  create = document.getElementById("route-form");
   console.log(create);
-  create.addEventListener("click", function() {
+  create.addEventListener("submit", function() {
     document.getElementById("new").hidden = true;
     document.getElementById("spinning-cube").hidden = false;
   });
