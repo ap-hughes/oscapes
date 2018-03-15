@@ -1,6 +1,4 @@
 <div class="container full-height">
-  <h1>Hi <%= @user.first_name %></h1>
-
   <h2>Your saved hikes</h2>
 
   <% if @user.favourites == [] %>
@@ -10,19 +8,36 @@
       <div class="favourite-block">
         <% route = Route.find(favourite.route_id) %>
         <%= image_tag "#{route.hero_image}" %>
-        <div class="route-details">
+        <div class="favourite-route-details">
           <h3><%= route.name %></h3>
-          <p><%= route.description %></p>
+          <p><%= route.description.truncate(400, separator: /\s/) %></p>
         </div>
-        <div class="route-end-block">
-          <div class="rating">
+      <div class="route-end-block">
+<!--           <div class="rating">
             <p>Rating</p>
             <% 4.times do %>
               <i class="glyphicon glyphicon-star"></i>
             <% end %>
-          </div>
+          </div> -->
+        <div class="ratings-block">
+          <% if route.reviews == [] %>
+            <p>No reviews yet</p>
+          <% else %>
+            <% ratings = [] %>
+            <% route.reviews.each do |review| %>
+              <% ratings << review.rating %>
+            <% end %>
+            <% average_rating = "%.1f" % ratings.reduce(:+).fdiv(ratings.length) %>
+            <% average_rating.to_i.times do %>
+              <i class="fas fa-star"></i>
+            <% end %>
+            <% (5 - average_rating.to_i).times do %>
+              <i class="far fa-star"></i>
+            <% end %>
+          <% end %>
+        </div>
           <%= link_to route_path(route) do %>
-            <div class="btn btn-primary">
+            <div class="btn btn-success">
               View Hike
             </div>
           <% end %>
