@@ -11,17 +11,15 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+#review-description-box:last-child {
+  border-bottom: none;
+  margin-bottom: 0px;
+}
 .stars {
   color: $orange;
 }
 
-#reviews {
-  margin-bottom: 40px;
-  // width: 60%;
-}
-
 .review-form {
-  // width: 60%;
   background: white;
   padding: 10px 20px;
   margin-top: 50px;

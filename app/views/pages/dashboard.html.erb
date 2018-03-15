@@ -15,13 +15,7 @@
           <p><%= route.description.truncate(400, separator: /\s/) %></p>
         </div>
       <div class="route-end-block">
-<!--           <div class="rating">
-            <p>Rating</p>
-            <% 4.times do %>
-              <i class="glyphicon glyphicon-star"></i>
-            <% end %>
-          </div> -->
-        <div class="ratings-block">
+        <div class="text-center">
           <% if route.reviews == [] %>
             <p>No reviews yet</p>
           <% else %>
@@ -31,10 +25,10 @@
             <% end %>
             <% average_rating = "%.1f" % ratings.reduce(:+).fdiv(ratings.length) %>
             <% average_rating.to_i.times do %>
-              <i class="fas fa-star"></i>
+              <i class="fas fa-star stars"></i>
             <% end %>
             <% (5 - average_rating.to_i).times do %>
-              <i class="far fa-star"></i>
+              <i class="far fa-star stars"></i>
             <% end %>
           <% end %>
         </div>
