@@ -1,9 +1,12 @@
 // Import Google fonts
 // @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:400,100,300,700,500");
-@import url("https://fonts.googleapis.com/css?family=Lora:400|Roboto:300,400,700");
+// @import url("https://fonts.googleapis.com/css?family=Lora:400|Roboto:300,400,700");
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans:700');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Open+Sans|PT+Sans:700');
+
 // Define fonts for body and headers
-$body-font: "Lora", "serif";
-$headers-font: "Roboto", "sans-serif";
+$body-font: 'IBM Plex Sans', sans-serif;
+$headers-font: 'PT Sans', sans-serif;
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
