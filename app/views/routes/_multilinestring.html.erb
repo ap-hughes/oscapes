@@ -1,6 +1,10 @@
 <div class="map-container">
-  <%= render 'show_sidebar' %>
-  <div id='map' class="show-map pad2"></div>
+  <% if @route.interest_points == [] %>
+    <div id='map' class="big-map pad2"></div>
+  <% else %>
+    <%= render 'show_sidebar' %>
+    <div id='map' class="show-map pad2"></div>
+  <% end %>
 </div>
 
   <script>
