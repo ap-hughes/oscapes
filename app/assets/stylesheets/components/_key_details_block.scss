@@ -10,7 +10,7 @@
 
 .description-block {
   padding: 30px 30px 0 0;
-  min-height: 20vh;
+  min-height: calc(360px - 20vh);
   p {
     width: 67%;
     color: $gray-darker;
