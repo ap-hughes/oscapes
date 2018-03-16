@@ -10,7 +10,7 @@
     <% if user_signed_in? %>
 
       <!-- Links when logged in -->
-      <%= link_to "Browse Hikes", routes_path, class: "navbar-oscapes-item navbar-oscapes-link" %>
+      <%= link_to "Browse Routes", routes_path, class: "navbar-oscapes-item navbar-oscapes-link" %>
 
       <!-- Avatar with dropdown menu -->
       <div class="navbar-oscapes-item">
@@ -24,17 +24,17 @@
             </li>
             <li>
               <%= link_to dashboard_path do %>
-                <i class="fa fa-cog"></i>  <%= t(".dashboard", default: "Bookmarks") %>
+                <i class="fas fa-bookmark"></i> <%= t(".dashboard", default: "Bookmarks") %>
               <% end %>
             </li>
             <li>
               <%= link_to new_route_path do %>
-                <i class="fa fa-sign-out"></i>  <%= t(".new", default: "Create route") %>
+                <i class="fas fa-plus"></i>  <%= t(".new", default: "Create route") %>
               <% end %>
             </li>
             <li>
               <%= link_to destroy_user_session_path, method: :delete do %>
-                <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+                <i class="fas fa-sign-out-alt"></i> <%= t(".sign_out", default: "Log out") %>
               <% end %>
             </li>
           </ul>
@@ -51,11 +51,48 @@
   <div class="navbar-oscapes-item hidden-md hidden-lg">
     <div class="dropdown">
       <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
-      <ul class="dropdown-menu dropdown-menu-right navbar-oscapes-dropdown-menu">
-        <li><a href="#">Some mobile link</a></li>
-        <li><a href="#">Other one</a></li>
-        <li><a href="#">Other one</a></li>
-      </ul>
+      <% if user_signed_in? %>
+        <ul class="dropdown-menu dropdown-menu-right navbar-oscapes-dropdown-menu">
+          <li>
+            <%= link_to routes_path do  %>
+              <i class="far fa-map"></i> <%= t(".sign_in", default: "Browse Routes") %>
+            <% end %>
+          </li>
+         <li>
+            <%= link_to user_path(current_user) do %>
+              <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to dashboard_path do %>
+              <i class="fas fa-bookmark"></i> <%= t(".dashboard", default: "Bookmarks") %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to new_route_path do %>
+              <i class="fas fa-plus"></i>  <%= t(".new", default: "Create route") %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <i class="fas fa-sign-out-alt"></i> <%= t(".sign_out", default: "Log out") %>
+            <% end %>
+          </li>
+        </ul>
+      <% else %>
+        <ul class="dropdown-menu dropdown-menu-right navbar-oscapes-dropdown-menu">
+          <li>
+          <%= link_to new_user_session_path do  %>
+            <i class="fas fa-sign-in-alt"></i> <%= t(".sign_in", default: "Login") %>
+          <% end %>
+          </li>
+          <li>
+            <%= link_to routes_path do  %>
+              <i class="far fa-map"></i> <%= t(".sign_in", default: "Browse Routes") %>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
     </div>
   </div>
 </div>
