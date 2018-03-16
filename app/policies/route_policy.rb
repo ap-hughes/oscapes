@@ -14,7 +14,7 @@ class RoutePolicy < ApplicationPolicy
     true
   end
 
-  def get_image?
+  def set_image?
     update?
   end
 

@@ -68,7 +68,7 @@ class RoutesController < ApplicationController
     redirect_to route_path(@route)
   end
 
-  def get_image
+  def set_image
     @route = Route.find(params[:id])
     authorize @route
     @coordinates = coordinates_from(@route.coordinates)
