@@ -1,5 +1,7 @@
 <div class="flexbox-container">
   <div id="profile-sidebar">
+    <div class="sidebar-child">
+
     <div class="avatar-container">
       <%= cl_image_tag(@user.photo.url(:bright_face), class: "avatar-large") %>
       <% if @user == current_user %>
@@ -20,17 +22,20 @@
         <% end %>
       </div>
     <% end %>
+    </div>
   </div>
   <div id="profile-container">
     <div class="row profile-content-container">
       <div class="col-xs-12">
         <div class="box-profile-content">
-          <h3 class="text-center">
+          <div class="about-user-box">
+            <h3 class="text-center">
             About <%= @user.first_name %>
-              <% if @user == current_user %>
-                <i id="edit-bio" class="far fa-edit"></i>
-              <% end %>
           </h3>
+            <% if @user == current_user %>
+              <span><i id="edit-bio" class="far fa-edit fa-md edit-button"></i></span>
+            <% end %>
+          </div>
           <%= render 'users/bio', user: @user  %>
           <%= render 'users/form', user: @user  %>
         </div>
