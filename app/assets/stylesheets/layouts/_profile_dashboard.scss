@@ -1,5 +1,8 @@
 .flexbox-container {
   display: flex;
+  h2, h3, h4 {
+    color: $os-green;
+  }
 }
 
 #profile-sidebar {
@@ -10,6 +13,15 @@
   height: calc(100vh - 70px) ;
   position: sticky !important;
   top: 70px !important;
+  // background-color: white;
+}
+
+.sidebar-child {
+  text-align: center;
+  background-color: white;
+  margin: 20px;
+  padding: 20px;
+  height: 100%;
 }
 
 #profile-container {
@@ -23,9 +35,15 @@
 .box-profile-content {
   background: white;
   padding: 10px 20px;
-  margin-top: 10px;
+  // margin-top: 10px;
   border-radius: 3px;
   box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.about-user-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .review-box:last-child {
@@ -57,6 +75,7 @@
     position: absolute;
     top: 20px;
     right: 40px;
+    opacity: 0;
   }
 }
 
@@ -70,6 +89,7 @@
 .ability-text-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   #user-ability-text {
     margin-right: 10px;
   }
@@ -88,6 +108,10 @@
 .photo-form {
   display: flex;
   text-align: center;
+}
+
+#user_photo {
+  // opacity: 0;
 }
 
 
