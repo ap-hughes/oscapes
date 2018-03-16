@@ -49,7 +49,7 @@
       <% @routes.each do |route| %>
         <%= link_to route_path(route) do %>
           <div id='listing-<%= i %>' class='listing' data-position='<%= i %>'>
-            <div class="square-image" style="background-image: url('<%= route.hero_image %>')"></div>
+            <div class="square-image" style="background-image: url('<%= cl_image_path(route.hero_image, :width => 400, :height => 400, :crop => :fill) %>')"></div>
             <div class="listing-info">
               <div class="route-name"><h4><%= route.name %></h4></div>
               <div class="card-bookmark">
