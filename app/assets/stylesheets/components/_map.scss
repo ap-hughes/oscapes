@@ -4,10 +4,14 @@
 }
 .mapboxgl-popup {
   max-width: 200px;
+  h5 {
+    color: $os-green;
+  }
 }
 .mapboxgl-popup-content {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
+  background: $cream;
 }
 
 .map-container {
@@ -19,6 +23,10 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .heading {
   display: flex;
   justify-content: space-between;
+  // box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
+  // background-color: $lightest-green;
+  border-radius: 5px;
+  margin: 10px;
 }
 .sidebar {
   width: 60%;
@@ -28,6 +36,15 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   overflow: scroll;
   border-right: 1px solid rgba(0, 0, 0, 0.25);
 }
+
+// .show-sidebar {
+//   background-color: $light-gray;
+//   border: 1px solid rgba(220,220,220,0.4);
+//   h4,h5 {
+//     color: $os-green;
+//   }
+// }
+
 .map {
   border-left: 1px solid #fff;
   position: absolute;
@@ -37,7 +54,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   bottom: 0;
 }
 .pad2 {
-  padding: 20px;
+  padding-left: 10px;
   box-sizing: border-box;
 }
 .listing {
@@ -169,7 +186,17 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   top: 0;
   left: 0;
   overflow: scroll;
-  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  // border-right: 1px solid rgba(0, 0, 0, 0.25);
+  background-color: #132938;
+  // background-color: $light-gray;
+  border-top: 1px solid rgba(220,220,220,0.4);
+  border-bottom: 1px solid rgba(220,220,220,0.4);
+  h4 {
+    color: white;
+  }
+  h5 {
+    color: $os-green;
+  }
 }
 .big-map {
   width: 100%;
@@ -185,6 +212,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .poi-description {
   padding: 0 15px;
   height: 145px;
+  // color: $light-gray;
   // overflow: hidden;
   p {
     margin: 0;
@@ -193,10 +221,12 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 .listing-info-hover:hover{
   background-color: $cream;
   transition: .5s;
+  border-radius: 5px;
 }
 .listing-info-active {
   background-color: $cream;
   transition: .5s;
+  border-radius: 5px;
 }
 
 .listing-info-show {
@@ -208,10 +238,14 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   display: flex;
   // flex-direction: column;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
-  background-color: white;
+  // background-color: #132938;
+  background-color: $light-gray;
   min-height: 200px;
+  border-radius: 5px;
   // position: relative;
   margin: 10px;
+  // border-top: 1px solid $orange;
+  // border-bottom: 1px solid $orange;
 }
 
 .point-link.listing-info-hover {
