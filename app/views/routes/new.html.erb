@@ -1,13 +1,19 @@
 <div class="container full-height" id="new">
   <p></p>
-  <div id="route-form">
-  <%= simple_form_for @route, remote: true do |f| %>
-  <%= f.error_notification %>
-    <%= f.input :name, required: true %>
-    <%= f.input :description, required: true %>
-    <%= f.file_field :upload, required: true %>
-    <%= f.button :submit, id: "Create" %>
-  <% end %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div id="route-form">
+        <h3>Create your route</h3>
+        <%= simple_form_for @route, remote: true do |f| %>
+        <%= f.error_notification %>
+          <%= f.input :name, required: true %>
+          <%= f.input :description, required: true %>
+          <h4>Add your GPX file for the route</h4>
+          <%= f.file_field :upload, required: true %>
+          <%= f.button :submit, id: "Create", class: "btn btn-success margin" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
