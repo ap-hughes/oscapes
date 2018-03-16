@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'pages#dashboard', as: :dashboard
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users, only: [:show, :edit, :update]
-  get 'routes/:id/get_image', to: 'routes#get_image', as: :image
+  get 'routes/:id/set_image', to: 'routes#set_image', as: :photo
 
   resources :routes, only: [:index, :show, :edit, :update, :new, :create] do
     get 'download', to: 'routes#download_gpx', as: :download
