@@ -51,7 +51,7 @@ class RoutesController < ApplicationController
     @image_coordinates = get_image_coordinates(@coordinates)
     @center = find_center(@coordinates)
     @average_rating = get_average_rating(@route)
-    if !@route.image_gallery_1
+    if !@route.hero_image || @route.hero_image == "https://images.unsplash.com/photo-1467294388771-b3e867a4d321?ixlib=rb-0.3.5&s=914592383364aed60abbfaf7b74d9ad4&auto=format&fit=crop&w=1050&q=80"
       get_images(@image_coordinates)
     end
     @images = [@route.hero_image, @route.image_gallery_1, @route.image_gallery_2]
@@ -79,7 +79,7 @@ class RoutesController < ApplicationController
       radius: 0,
       has_geo: true,
       content_type: 1,
-      tags: ['nature', 'landscape'],
+      tags: ['landscape'],
       tag_mode: 'any',
       per_page: 10,
     }
